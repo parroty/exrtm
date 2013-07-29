@@ -1,0 +1,20 @@
+<tasks>
+  <list id="876543210" current="2006-05-07T08:13:26Z">
+    <taskseries id="123456789" created="2006-05-07T10:19:54Z" modified="2006-05-07T10:19:54Z"
+               name="Get Bananas" source="api" url="http://www.example.com" location_id="">
+      <rrule every="1">FREQ=DAILY;INTERVAL=1</rrule>
+      <tags/>
+      <participants/>
+      <notes/>
+      <task id="987654321" due="" has_due_time="0" added="2006-05-07T10:19:54Z"
+           completed="" deleted="" priority="N" postponed="0" estimate=""/>
+    </taskseries>
+    <taskseries id="234567891" name="2ndTask">
+    </taskseries>
+    <deleted>
+      <taskseries id="650390">
+        <task id="815255" deleted="2006-05-07T14:26:47Z" />
+      </taskseries>
+    </deleted>
+  </list>
+</tasks>

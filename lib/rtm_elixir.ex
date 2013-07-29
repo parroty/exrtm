@@ -1,2 +1,0 @@
-defmodule RtmElixir do
-end
