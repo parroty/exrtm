@@ -1,4 +1,4 @@
-alias Exrtm.Xml.XmlNode
+alias Exrtm.Util.Xml.XmlNode
 
 defmodule Exrtm.List do
   defrecord List, id: nil, name: nil, deleted: nil, locked: nil,

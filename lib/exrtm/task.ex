@@ -1,4 +1,4 @@
-alias Exrtm.Xml.XmlNode
+alias Exrtm.Util.Xml.XmlNode
 
 defmodule Exrtm.Task do
   defrecord Task, id: nil, name: nil, tags: nil, modified: nil, participants: nil,

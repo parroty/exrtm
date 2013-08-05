@@ -1,4 +1,4 @@
-alias Exrtm.Xml.XmlNode
+alias Exrtm.Util.Xml.XmlNode
 
 defmodule Exrtm.API.Auth.GetFrob do
   def invoke(user) do

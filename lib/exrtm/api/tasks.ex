@@ -1,4 +1,4 @@
-alias Exrtm.Xml.XmlNode
+alias Exrtm.Util.Xml.XmlNode
 
 defmodule Exrtm.API.Tasks.GetList do
   def invoke(user) do

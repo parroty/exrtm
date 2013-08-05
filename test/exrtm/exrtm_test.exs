@@ -14,7 +14,7 @@ defmodule ExrtmTest do
     assert(Regex.match?(%r/.+rememberthemilk.+api_key.+/, url))
   end
 
-  test_with_mock "get_frob", Exrtm.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+  test_with_mock "get_frob", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     response  = Exrtm.get_frob(@mock_user)
     assert(response == "0a56717c3561e53584f292bb7081a533c197270c")
   end

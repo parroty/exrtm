@@ -1,4 +1,4 @@
-alias Exrtm.Xml.XmlNode
+alias Exrtm.Util.Xml.XmlNode
 
 defmodule Exrtm.Chunk do
   defrecord Chunk, id: nil, completed: nil, added: nil, postponed: nil,

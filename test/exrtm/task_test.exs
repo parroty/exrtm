@@ -6,7 +6,7 @@ defmodule Exrtm.TaskTest do
 
   @mock_user [key: "key", secret: "secret", token: "token"]
 
-  test_with_mock "find_all", Exrtm.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+  test_with_mock "find_all", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     tasks = Exrtm.Task.find_all(@mock_user)
     assert(Enum.count(tasks) == 2)
 
@@ -35,19 +35,19 @@ defmodule Exrtm.TaskTest do
     assert(chunk.due          == "")
   end
 
-  test_with_mock "find", Exrtm.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+  test_with_mock "find", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     task = Exrtm.Task.find(@mock_user, "2ndTask")
     assert(task.id == "234567891")
   end
 
-  test_with_mock "add", Exrtm.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+  test_with_mock "add", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     task = Exrtm.Task.add(@mock_user, "Get Bananas")
     assert(task.id      == "987654321")
     assert(task.name    == "Get Bananas")
     assert(task.list_id == "876543210")
   end
 
-  test_with_mock "delete", Exrtm.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+  test_with_mock "delete", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     task  = Exrtm.Task.find(@mock_user, "Get Bananas")
     deleted_count = Exrtm.Task.delete(@mock_user, task)
     assert(deleted_count == 1)

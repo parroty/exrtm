@@ -2,7 +2,7 @@ Code.require_file "../test_helper.exs", __DIR__
 
 defmodule Exrtm.XmlTest do
   use ExUnit.Case
-  alias Exrtm.Xml.XmlNode
+  alias Exrtm.Util.Xml.XmlNode
 
   setup do
     doc = XmlNode.from_string(%b(

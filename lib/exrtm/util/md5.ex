@@ -1,4 +1,4 @@
-defmodule Exrtm.MD5 do
+defmodule Exrtm.Util.MD5 do
   def hexdigest(string) do
     hash = :crypto.hash(:md5, string)
     list = Enum.map(binary_to_list(hash), fn(x) -> padding(x) end)

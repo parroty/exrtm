@@ -1,4 +1,4 @@
-defmodule Exrtm.Xml do
+defmodule Exrtm.Util.Xml do
   defrecord :xmlAttribute, Record.extract(:xmlAttribute, from_lib: "xmerl/include/xmerl.hrl")
   defrecord :xmlText, Record.extract(:xmlText, from_lib: "xmerl/include/xmerl.hrl")
 

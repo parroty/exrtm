@@ -1,4 +1,4 @@
-defmodule Exrtm.HTTP do
+defmodule Exrtm.Util.HTTP do
   # TODO : error handling
   def get(url) do
     :inets.start

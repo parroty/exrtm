@@ -20,7 +20,7 @@ defmodule Exrtm.API do
   # TODO : error handling
   def do_request(user, request) do
     url = @rtm_uri <> make_url(user[:secret], request)
-    Exrtm.HTTP.get(url)
+    Exrtm.Util.HTTP.get(url)
   end
 
   defp make_url(secret, request) do
@@ -40,6 +40,6 @@ defmodule Exrtm.API do
     joined_key_values = Enum.map(params, fn(x) -> Enum.join(x, "") end)
     joined_param_str  = Enum.join(Enum.sort(joined_key_values))
 
-    Exrtm.MD5.hexdigest("#{secret}#{joined_param_str}")
+    Exrtm.Util.MD5.hexdigest("#{secret}#{joined_param_str}")
   end
 end
