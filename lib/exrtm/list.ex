@@ -18,6 +18,10 @@ defmodule Exrtm.List do
     Exrtm.API.Lists.Add.invoke(user, name)
   end
 
+  def delete(user, list) do
+    Exrtm.API.Lists.Delete.invoke(user, list)
+  end
+
   def parse_list(element) do
     List.new(
       id:         element |> XmlNode.attr("id"),

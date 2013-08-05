@@ -8,6 +8,7 @@ defmodule Exrtm.Mock do
     [url: %r/.*rtm.timelines.create.*/, response: "<timeline>12741021</timeline>"],
     [url: %r/.*rtm.lists.getList.*/, response_file: "test/fixtures/rtm.lists.getList" ],
     [url: %r/.*rtm.lists.add.*/, response: "<list id=\"987654321\" name=\"New List\" deleted=\"0\" locked=\"0\" archived=\"0\" position=\"0\" smart=\"0\"/>"],
+    [url: %r/.*rtm.lists.delete.*/, response_file: "test/fixtures/rtm.lists.delete" ],
     [url: %r/.*rtm.tasks.add.*/, response_file: "test/fixtures/rtm.tasks.add" ],
     [url: %r/.*rtm.tasks.getList.*/, response_file: "test/fixtures/rtm.tasks.getList" ],
     [url: %r/.*rtm.tasks.delete.*/, response_file: "test/fixtures/rtm.tasks.delete" ]

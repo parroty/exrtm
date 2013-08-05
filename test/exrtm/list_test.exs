@@ -21,4 +21,17 @@ defmodule Exrtm.ListTest do
     response = Exrtm.List.add(@mock_user, "New List")
     assert(response.name == "New List")
   end
+
+  test_with_mock "delete valid list", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+    list   = Exrtm.List.find(@mock_user, "New List")
+    result = Exrtm.List.delete(@mock_user, list)
+
+    assert(result != nil)
+  end
+
+  test_with_mock "delete invalid list throws exception", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+    assert_raise RuntimeError, fn ->
+      Exrtm.List.delete(@mock_user, nil)
+    end
+  end
 end
