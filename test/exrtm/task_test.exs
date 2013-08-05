@@ -47,10 +47,16 @@ defmodule Exrtm.TaskTest do
     assert(task.list_id == "876543210")
   end
 
-  test_with_mock "delete", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
-    task  = Exrtm.Task.find(@mock_user, "Get Bananas")
-    deleted_count = Exrtm.Task.delete(@mock_user, task)
-    assert(deleted_count == 1)
+  test_with_mock "delete valid task", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+    task   = Exrtm.Task.find(@mock_user, "Get Bananas")
+    result = Exrtm.Task.delete(@mock_user, task)
+
+    assert(result != nil)
   end
 
+  test_with_mock "delete invalid tasks throws exception", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+    assert_raise RuntimeError, fn ->
+      Exrtm.Task.delete(@mock_user, nil)
+    end
+  end
 end

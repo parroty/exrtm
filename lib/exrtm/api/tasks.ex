@@ -33,13 +33,11 @@ end
 
 defmodule Exrtm.API.Tasks.Delete do
   def invoke(user, task) do
+    if task == nil do raise "specified task is invalid." end
+
     timeline = Exrtm.Timeline.create(user)
-    if task != nil do
-      items = Enum.map(task.chunks, fn(c) -> do_invoke(user, task, c, timeline) end)
-      Enum.count(items)
-    else
-      0
-    end
+    items    = Enum.map(task.chunks, fn(c) -> do_invoke(user, task, c, timeline) end)
+    task
   end
 
   defp do_invoke(user, task, chunk, timeline) do
