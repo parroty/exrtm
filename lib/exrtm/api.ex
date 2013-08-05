@@ -23,6 +23,10 @@ defmodule Exrtm.API do
     Exrtm.Util.HTTP.get(url)
   end
 
+  def create_request_param(user, params) do
+    [api_key: user[:key], auth_token: user[:token]] ++ params
+  end
+
   defp make_url(secret, request) do
     params = Enum.map(Keyword.keys(request), fn(x) -> [atom_to_binary(x), request[x]] end)
     @rest_path <> do_make_url(secret, params)
