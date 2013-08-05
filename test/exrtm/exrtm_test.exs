@@ -18,4 +18,9 @@ defmodule ExrtmTest do
     response  = Exrtm.get_frob(@mock_user)
     assert(response == "0a56717c3561e53584f292bb7081a533c197270c")
   end
+
+  test_with_mock "get_token", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+    response  = Exrtm.get_token(@mock_user, "stub_frob")
+    assert(response == "6410bde19b6dfb474fec71f186bc715831ea6842")
+  end
 end
