@@ -60,7 +60,7 @@ defmodule Exrtm.API.Tasks do
 
     defp parse_tags(element) do
       tags = element |> XmlNode.all("//tag")
-      Enum.map(tags, fn(tag) -> tag |> XmlNode.text end)
+      Enum.join(Enum.map(tags, fn(tag) -> tag |> XmlNode.text end), ",")
     end
 
     defp parse_chunks(elements) do
