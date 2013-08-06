@@ -48,7 +48,7 @@ defmodule Exrtm.TaskTest do
   end
 
   test_with_mock "add fails with invalid response", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request_error(url) end] do
-    assert_raise RuntimeError, fn ->
+    assert_raise ExrtmError, fn ->
       Exrtm.Task.add(@mock_user, "Get Bananas")
     end
   end
@@ -61,7 +61,7 @@ defmodule Exrtm.TaskTest do
   end
 
   test_with_mock "delete invalid tasks throws exception", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
-    assert_raise RuntimeError, fn ->
+    assert_raise ExrtmError, fn ->
       Exrtm.Task.delete(@mock_user, nil)
     end
   end

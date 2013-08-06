@@ -13,7 +13,7 @@ defmodule Exrtm.API.Tasks.Base do
 
     tasks = parse_task(list)
     count = Enum.count(tasks)
-    if count > 1 do raise "expected single task, but #{count} tasks returned." end
+    if count > 1 do raise ExrtmError.new(message: "expected single task, but #{count} tasks returned.") end
     Enum.first(tasks)
   end
 
@@ -88,7 +88,7 @@ end
 
 defmodule Exrtm.API.Tasks.Delete do
   def invoke(user, task) do
-    if task == nil do raise "specified task is invalid." end
+    if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
 
     timeline = Exrtm.Timeline.create(user)
     Enum.map(task.chunks, fn(c) -> do_invoke(user, task, c, timeline) end)

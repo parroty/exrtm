@@ -37,7 +37,7 @@ end
 
 defmodule Exrtm.API.Lists.Delete do
   def invoke(user, list) do
-    if list == nil do raise "specified list is invalid." end
+    if list == nil do raise ExrtmError.new(message: "specified list is invalid.") end
 
     timeline = Exrtm.Timeline.create(user)
     request  = Exrtm.API.create_request_param(user, [method: "rtm.lists.delete", list_id: list.id, timeline: timeline])

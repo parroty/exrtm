@@ -30,7 +30,7 @@ defmodule Exrtm.ListTest do
   end
 
   test_with_mock "delete invalid list throws exception", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
-    assert_raise RuntimeError, fn ->
+    assert_raise ExrtmError, fn ->
       Exrtm.List.delete(@mock_user, nil)
     end
   end
