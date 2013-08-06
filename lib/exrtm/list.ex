@@ -1,12 +1,10 @@
 alias Exrtm.Util.Xml.XmlNode
+alias Exrtm.Record.List
 
 defmodule Exrtm.List do
   @moduledoc """
   Represents the 'list' of RTM API.
   """
-
-  defrecord List, id: nil, name: nil, deleted: nil, locked: nil,
-                  archived: nil, position: nil, smart: nil, sort_order: nil
 
   @doc """
   Returns all the registered lists.

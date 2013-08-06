@@ -1,13 +1,10 @@
 alias Exrtm.Util.Xml.XmlNode
+alias Exrtm.Record.Task
 
 defmodule Exrtm.Task do
   @moduledoc """
   Represents the 'taskseries' of RTM API.
   """
-
-  defrecord Task, id: nil, name: nil, tags: nil, modified: nil, participants: nil,
-                  url: nil, created: nil, source: nil, rrule: nil,
-                  chunks: nil, list_id: nil
 
   @doc """
   Returns all the registered tasks.
