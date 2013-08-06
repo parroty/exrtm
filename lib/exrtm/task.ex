@@ -2,7 +2,7 @@ alias Exrtm.Util.Xml.XmlNode
 
 defmodule Exrtm.Task do
   @moduledoc """
-  Represents the 'taskseries' of RTM API.
+  Provides 'task' related functionalities.
   """
 
   @doc """

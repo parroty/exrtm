@@ -4,7 +4,7 @@ alias Exrtm.Record.Chunk
 
 defmodule Exrtm.API.Tasks.Base do
   @doc """
-  handle requests which involves single task item like add and delete operations.
+  handle requests which involves single item like add and delete operations.
   """
   def handle_single_item(user, request) do
     response = Exrtm.API.do_request(user, request)
@@ -18,7 +18,7 @@ defmodule Exrtm.API.Tasks.Base do
   end
 
   @doc """
-  handle requests which involves multiple task items like getList operations.
+  handle requests which involves multiple items like getList operations.
   """
   def handle_multiple_items(user, request) do
     response = Exrtm.API.do_request(user, request)

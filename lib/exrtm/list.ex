@@ -1,17 +1,15 @@
 alias Exrtm.Util.Xml.XmlNode
-alias Exrtm.Record.List
 
 defmodule Exrtm.List do
   @moduledoc """
-  Represents the 'list' of RTM API.
+  Provides 'list' related functionalities.
   """
 
   @doc """
   Returns all the registered lists.
   """
   def get_list(user) do
-    lists = Exrtm.API.Lists.GetList.invoke(user)
-    Enum.map(lists, fn(e) -> parse_list(e) end)
+    Exrtm.API.Lists.GetList.invoke(user)
   end
 
   @doc """
@@ -34,18 +32,5 @@ defmodule Exrtm.List do
   """
   def delete(user, list) do
     Exrtm.API.Lists.Delete.invoke(user, list)
-  end
-
-  def parse_list(element) do
-    List.new(
-      id:         element |> XmlNode.attr("id"),
-      name:       element |> XmlNode.attr("name"),
-      deleted:    element |> XmlNode.attr("deleted"),
-      locked:     element |> XmlNode.attr("locked"),
-      archived:   element |> XmlNode.attr("archived"),
-      position:   element |> XmlNode.attr("position"),
-      smart:      element |> XmlNode.attr("smart"),
-      sort_order: element |> XmlNode.attr("sort_order")
-    )
   end
 end
