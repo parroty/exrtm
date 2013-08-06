@@ -2,7 +2,7 @@ Code.require_file "lib/exrtm.ex", __DIR__
 
 defmodule ExrtmSample do
   def operate_tasks(user) do
-    tasks = user |> Exrtm.Task.find_all()
+    tasks = user |> Exrtm.Task.get_list()
     # task  = user |> Exrtm.Task.add("xxx")
     # count = user |> Exrtm.Task.delete(task)
 
@@ -16,7 +16,7 @@ defmodule ExrtmSample do
   end
 
   def operate_lists(user) do
-    lists = user |> Exrtm.List.alive_all()
+    lists = user |> Exrtm.List.get_list()
     inbox = user |> Exrtm.List.find("Inbox")
 
     IO.puts "\n----operate_lists----"
