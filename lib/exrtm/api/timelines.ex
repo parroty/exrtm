@@ -8,7 +8,8 @@ defmodule Exrtm.API.Timelines.Create do
   end
 
   def parse_result(response) do
-    doc = XmlNode.from_string(response)
-    doc |> XmlNode.first("//timeline") |> XmlNode.text
+    XmlNode.from_string(response)
+      |> XmlNode.first("//timeline")
+      |> XmlNode.text
   end
 end

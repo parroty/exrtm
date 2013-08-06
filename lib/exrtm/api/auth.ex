@@ -7,9 +7,10 @@ defmodule Exrtm.API.Auth.GetFrob do
     parse_result(response)
   end
 
-  def parse_result(response) do
-    doc = XmlNode.from_string(response)
-    doc |> XmlNode.first("//frob") |> XmlNode.text
+  defp parse_result(response) do
+    XmlNode.from_string(response)
+       |> XmlNode.first("//frob")
+       |> XmlNode.text
   end
 end
 
@@ -20,8 +21,9 @@ defmodule Exrtm.API.Auth.GetToken do
     parse_result(response)
   end
 
-  def parse_result(response) do
-    doc = XmlNode.from_string(response)
-    doc |> XmlNode.first("//token") |> XmlNode.text
+  defp parse_result(response) do
+    XmlNode.from_string(response)
+      |> XmlNode.first("//token")
+      |> XmlNode.text
   end
 end

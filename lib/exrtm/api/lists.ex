@@ -7,9 +7,9 @@ defmodule Exrtm.API.Lists.Base do
   end
 
   defp parse_one_list_result(response) do
-    doc = XmlNode.from_string(response)
-    doc |> XmlNode.first("//list")
-        |> Exrtm.List.parse_list
+    XmlNode.from_string(response)
+      |> XmlNode.first("//list")
+      |> Exrtm.List.parse_list
   end
 end
 
@@ -21,9 +21,9 @@ defmodule Exrtm.API.Lists.GetList do
   end
 
   def parse_result(response) do
-    doc = XmlNode.from_string(response)
-    doc |> XmlNode.first("//lists")
-        |> XmlNode.all("//list")
+    XmlNode.from_string(response)
+      |> XmlNode.first("//lists")
+      |> XmlNode.all("//list")
   end
 end
 
