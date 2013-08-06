@@ -6,7 +6,7 @@ defmodule Exrtm.TaskTest do
 
   @mock_user [key: "key", secret: "secret", token: "token"]
 
-  test_with_mock "get_list", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+  test_with_mock "get task list", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     tasks = Exrtm.Task.get_list(@mock_user)
     assert(Enum.count(tasks) == 2)
 
@@ -35,19 +35,19 @@ defmodule Exrtm.TaskTest do
     assert(chunk.due          == "")
   end
 
-  test_with_mock "get_by_name", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+  test_with_mock "get task by the name", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     task = Exrtm.Task.get_by_name(@mock_user, "2ndTask")
     assert(task.id == "234567891")
   end
 
-  test_with_mock "add", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+  test_with_mock "add task", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     task = Exrtm.Task.add(@mock_user, "Get Bananas")
     assert(task.id      == "987654321")
     assert(task.name    == "Get Bananas")
     assert(task.list_id == "876543210")
   end
 
-  test_with_mock "add fails with invalid response", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request_error(url) end] do
+  test_with_mock "add task fails with invalid response", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request_error(url) end] do
     assert_raise ExrtmError, fn ->
       Exrtm.Task.add(@mock_user, "Get Bananas")
     end
@@ -60,9 +60,23 @@ defmodule Exrtm.TaskTest do
     assert(result != nil)
   end
 
-  test_with_mock "delete invalid tasks throws exception", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+  test_with_mock "delete invalid task throws exception", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     assert_raise ExrtmError, fn ->
       Exrtm.Task.delete(@mock_user, nil)
     end
+  end
+
+  test_with_mock "completes task", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+    task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
+    result = Exrtm.Task.complete(@mock_user, task)
+
+    assert(result != nil)
+  end
+
+  test_with_mock "uncompletes task", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+    task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
+    result = Exrtm.Task.uncomplete(@mock_user, task)
+
+    assert(result != nil)
   end
 end

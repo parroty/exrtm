@@ -28,9 +28,23 @@ defmodule Exrtm.Task do
   end
 
   @doc """
-  Deletes a specified list object.
+  Deletes the specified task.
   """
   def delete(user, task) do
     Exrtm.API.Tasks.Delete.invoke(user, task)
+  end
+
+  @doc """
+  Completes the specified task.
+  """
+  def complete(user, task) do
+    Exrtm.API.Tasks.Complete.invoke(user, task)
+  end
+
+  @doc """
+  Uncompletes the specified task.
+  """
+  def uncomplete(user, task) do
+    Exrtm.API.Tasks.Uncomplete.invoke(user, task)
   end
 end

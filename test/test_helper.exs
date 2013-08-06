@@ -11,7 +11,9 @@ defmodule Exrtm.Mock do
     [url: %r/.*rtm.lists.delete.*/, response_file: "test/fixtures/rtm.lists.delete" ],
     [url: %r/.*rtm.tasks.add.*/, response_file: "test/fixtures/rtm.tasks.add" ],
     [url: %r/.*rtm.tasks.getList.*/, response_file: "test/fixtures/rtm.tasks.getList" ],
-    [url: %r/.*rtm.tasks.delete.*/, response_file: "test/fixtures/rtm.tasks.delete" ]
+    [url: %r/.*rtm.tasks.delete.*/, response_file: "test/fixtures/rtm.tasks.delete" ],
+    [url: %r/.*rtm.tasks.complete.*/, response_file: "test/fixtures/rtm.tasks.complete" ],
+    [url: %r/.*rtm.tasks.uncomplete.*/, response_file: "test/fixtures/rtm.tasks.uncomplete" ]
   ]
   @error_patterns [
     [url: %r/.*rtm.tasks.add.*/, response_file: "test/fixtures/rtm.tasks.add.invalid" ]
