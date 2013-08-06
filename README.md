@@ -39,7 +39,7 @@ token = xxxxx
 <Lists>
 Inbox, Personal, Study, Work, Sent, All Tasks
 <Inbox>
-Exrtm.List.List[id: "xxxxxx", name: "Inbox", deleted: "0", locked: "1", archived: "0", position: "-1",
+Exrtm.List[id: "xxxxxx", name: "Inbox", deleted: "0", locked: "1", archived: "0", position: "-1",
 smart: "0", sort_order: "0"]
 
 ----operate_tasks----
@@ -49,22 +49,6 @@ test2, completed task 2, RTMAPITEST, test, completed task 1
 
 ## Usage
 sample.ex and tests covers the usage examples.
-
-- Authentications
-  - Exrtm.init_api(key, secret, token)
-  - Exrtm.get_frob(user)
-  - Exrtm.get\_auth\_url(user, perm, frob)
-  - Exrtm.get_token(user, frob)
-
-- Tasks
-  - Exrtm.Task.find_all()
-  - Exrtm.Task.add(task_name)
-  - Exrtm.Task.delete(task)
-
-- Lists
-  - Exrtm.List.alive_all()
-  - Exrtm.List.find(list_name)
-  - Exrtm.List.add(user, name)
 
 ## Notes
 It's started for learning Elixir, and only some part of the API is implemented at the moment.
