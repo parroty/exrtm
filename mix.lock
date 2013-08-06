@@ -1,2 +1,3 @@
-[ "meck": {:git, "git://github.com/eproxus/meck.git", "161e240166a0d20e9ffa2be5d0bfa6a981f12aef", []},
+[ "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "9a1f52513921401349176684d8ed599f3877db7f", []},
+  "meck": {:git, "git://github.com/eproxus/meck.git", "161e240166a0d20e9ffa2be5d0bfa6a981f12aef", []},
   "mock": {:git, "git://github.com/jjh42/mock.git", "98a44a42192a2efee064cd7b7fa3739f6b3b731e", []} ]
