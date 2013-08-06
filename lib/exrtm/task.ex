@@ -47,4 +47,18 @@ defmodule Exrtm.Task do
   def uncomplete(user, task) do
     Exrtm.API.Tasks.Uncomplete.invoke(user, task)
   end
+
+  @doc """
+  Add tags to the specified task. 'tags' is comma delimited list of tags.
+  """
+  def add_tags(user, task, tags) do
+    Exrtm.API.Tasks.AddTags.invoke(user, task, tags)
+  end
+
+  @doc """
+  Remove tags from the specified task. 'tags' is comma delimited list of tags.
+  """
+  def remove_tags(user, task, tags) do
+    Exrtm.API.Tasks.RemoveTags.invoke(user, task, tags)
+  end
 end

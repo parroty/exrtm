@@ -42,7 +42,7 @@ defmodule Exrtm.API.Tasks.Base do
       id:           element |> XmlNode.attr("id"),
       name:         element |> XmlNode.attr("name"),
       modified:     element |> XmlNode.attr("modified"),
-      tags:         element |> XmlNode.first("tags") |> XmlNode.text,
+      tags:         element |> XmlNode.first("tags") |> parse_tags,
       participants: element |> XmlNode.first("participants") |> XmlNode.text,
       url:          element |> XmlNode.attr("url"),
       created:      element |> XmlNode.attr("created"),
@@ -51,6 +51,11 @@ defmodule Exrtm.API.Tasks.Base do
       list_id:      list_id,
       chunks:       chunks
     )
+  end
+
+  defp parse_tags(element) do
+    tags = element |> XmlNode.all("//tag")
+    Enum.map(tags, fn(tag) -> tag |> XmlNode.text end)
   end
 
   defp parse_chunks(elements) do
@@ -108,8 +113,8 @@ defmodule Exrtm.API.Tasks.Complete do
     if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
 
     timeline = Exrtm.Timeline.create(user)
-    Enum.map(task.chunks, fn(c) -> do_invoke(user, task, c, timeline) end)
-    task
+    tasks = Enum.map(task.chunks, fn(c) -> do_invoke(user, task, c, timeline) end)
+    Enum.first(tasks)
   end
 
   defp do_invoke(user, task, chunk, timeline) do
@@ -125,14 +130,48 @@ defmodule Exrtm.API.Tasks.Uncomplete do
     if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
 
     timeline = Exrtm.Timeline.create(user)
-    Enum.map(task.chunks, fn(c) -> do_invoke(user, task, c, timeline) end)
-    task
+    tasks = Enum.map(task.chunks, fn(c) -> do_invoke(user, task, c, timeline) end)
+    Enum.first(tasks)
   end
 
   defp do_invoke(user, task, chunk, timeline) do
     request = Exrtm.API.create_request_param(user,
                 [method: "rtm.tasks.uncomplete", timeline: timeline, list_id: task.list_id,
                  taskseries_id: task.id, task_id: chunk.id])
+    Exrtm.API.Tasks.Base.handle_single_item(user, request)
+  end
+end
+
+defmodule Exrtm.API.Tasks.AddTags do
+  def invoke(user, task, tags) do
+    if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
+
+    timeline = Exrtm.Timeline.create(user)
+    tasks = Enum.map(task.chunks, fn(c) -> do_invoke(user, task, c, timeline, tags) end)
+    Enum.first(tasks)
+  end
+
+  defp do_invoke(user, task, chunk, timeline, tags) do
+    request = Exrtm.API.create_request_param(user,
+                [method: "rtm.tasks.addTags", timeline: timeline, list_id: task.list_id,
+                 taskseries_id: task.id, task_id: chunk.id, tags: tags])
+    Exrtm.API.Tasks.Base.handle_single_item(user, request)
+  end
+end
+
+defmodule Exrtm.API.Tasks.RemoveTags do
+  def invoke(user, task, tags) do
+    if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
+
+    timeline = Exrtm.Timeline.create(user)
+    tasks = Enum.map(task.chunks, fn(c) -> do_invoke(user, task, c, timeline, tags) end)
+    Enum.first(tasks)
+  end
+
+  defp do_invoke(user, task, chunk, timeline, tags) do
+    request = Exrtm.API.create_request_param(user,
+                [method: "rtm.tasks.removeTags", timeline: timeline, list_id: task.list_id,
+                 taskseries_id: task.id, task_id: chunk.id, tags: tags])
     Exrtm.API.Tasks.Base.handle_single_item(user, request)
   end
 end

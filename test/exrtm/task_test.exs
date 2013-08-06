@@ -14,7 +14,7 @@ defmodule Exrtm.TaskTest do
     assert(task.id           == "123456789")
     assert(task.name         == "Get Bananas")
     assert(task.modified     == "2006-05-07T10:19:54Z")
-    assert(task.tags         == nil)
+    assert(task.tags         == [])
     assert(task.participants == nil)
     assert(task.url          == "http://www.example.com")
     assert(task.created      == "2006-05-07T10:19:54Z")
@@ -70,13 +70,28 @@ defmodule Exrtm.TaskTest do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.complete(@mock_user, task)
 
-    assert(result != nil)
+    assert(Enum.first(result.chunks).completed != "")
   end
 
   test_with_mock "uncompletes task", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.uncomplete(@mock_user, task)
 
-    assert(result != nil)
+    assert(Enum.first(result.chunks).completed == "")
   end
+
+  test_with_mock "add tags", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+    task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
+    result = Exrtm.Task.add_tags(@mock_user, task, "coffee,good,mmm")
+
+    assert(result.tags  == ["coffee", "good", "mmm"])
+  end
+
+  test_with_mock "remove tags", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+    task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
+    result = Exrtm.Task.remove_tags(@mock_user, task, "good")
+
+    assert(result.tags  == ["coffee", "mmm"])
+  end
+
 end
