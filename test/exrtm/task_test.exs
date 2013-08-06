@@ -57,7 +57,7 @@ defmodule Exrtm.TaskTest do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.delete(@mock_user, task)
 
-    assert(result != nil)
+    assert(Enum.first(result.chunks).deleted != "")
   end
 
   test_with_mock "delete invalid task throws exception", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do

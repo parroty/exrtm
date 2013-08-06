@@ -3,8 +3,12 @@ alias Exrtm.Record.Task
 alias Exrtm.Record.Chunk
 
 defmodule Exrtm.API.Tasks.Base do
+  @moduledoc """
+  Provides basic processing for task API.
+  """
+
   @doc """
-  handle requests which involves single item like add and delete operations.
+  Handle requests which involves single item like add and delete operations.
   """
   def handle_single_item(user, request) do
     response = Exrtm.API.do_request(user, request)
@@ -18,7 +22,7 @@ defmodule Exrtm.API.Tasks.Base do
   end
 
   @doc """
-  handle requests which involves multiple items like getList operations.
+  Handle requests which involves multiple items like getList operations.
   """
   def handle_multiple_items(user, request) do
     response = Exrtm.API.do_request(user, request)
@@ -76,6 +80,27 @@ defmodule Exrtm.API.Tasks.Base do
   end
 end
 
+defmodule Exrtm.API.Tasks.Operations do
+  @moduledoc """
+  Provides basic processing for a certain task operation
+  """
+
+  def invoke(user, task, method, options // []) do
+    if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
+
+    timeline = Exrtm.Timeline.create(user)
+    tasks = Enum.map(task.chunks, fn(chunk) -> do_invoke(user, task, chunk, timeline, method, options) end)
+    Enum.first(tasks)
+  end
+
+  defp do_invoke(user, task, chunk, timeline, method, options) do
+    request = Exrtm.API.create_request_param(user,
+                [method: method, timeline: timeline, list_id: task.list_id,
+                 taskseries_id: task.id, task_id: chunk.id])
+    Exrtm.API.Tasks.Base.handle_single_item(user, request ++ options)
+  end
+end
+
 defmodule Exrtm.API.Tasks.GetList do
   def invoke(user) do
     request  = Exrtm.API.create_request_param(user, [method: "rtm.tasks.getList"])
@@ -93,85 +118,30 @@ end
 
 defmodule Exrtm.API.Tasks.Delete do
   def invoke(user, task) do
-    if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
-
-    timeline = Exrtm.Timeline.create(user)
-    Enum.map(task.chunks, fn(c) -> do_invoke(user, task, c, timeline) end)
-    task
-  end
-
-  defp do_invoke(user, task, chunk, timeline) do
-    request = Exrtm.API.create_request_param(user,
-                [method: "rtm.tasks.delete", timeline: timeline, list_id: task.list_id,
-                 taskseries_id: task.id, task_id: chunk.id])
-    Exrtm.API.Tasks.Base.handle_single_item(user, request)
+    Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.delete")
   end
 end
 
 defmodule Exrtm.API.Tasks.Complete do
   def invoke(user, task) do
-    if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
-
-    timeline = Exrtm.Timeline.create(user)
-    tasks = Enum.map(task.chunks, fn(c) -> do_invoke(user, task, c, timeline) end)
-    Enum.first(tasks)
-  end
-
-  defp do_invoke(user, task, chunk, timeline) do
-    request = Exrtm.API.create_request_param(user,
-                [method: "rtm.tasks.complete", timeline: timeline, list_id: task.list_id,
-                 taskseries_id: task.id, task_id: chunk.id])
-    Exrtm.API.Tasks.Base.handle_single_item(user, request)
+    Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.complete")
   end
 end
 
 defmodule Exrtm.API.Tasks.Uncomplete do
   def invoke(user, task) do
-    if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
-
-    timeline = Exrtm.Timeline.create(user)
-    tasks = Enum.map(task.chunks, fn(c) -> do_invoke(user, task, c, timeline) end)
-    Enum.first(tasks)
-  end
-
-  defp do_invoke(user, task, chunk, timeline) do
-    request = Exrtm.API.create_request_param(user,
-                [method: "rtm.tasks.uncomplete", timeline: timeline, list_id: task.list_id,
-                 taskseries_id: task.id, task_id: chunk.id])
-    Exrtm.API.Tasks.Base.handle_single_item(user, request)
+    Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.uncomplete")
   end
 end
 
 defmodule Exrtm.API.Tasks.AddTags do
   def invoke(user, task, tags) do
-    if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
-
-    timeline = Exrtm.Timeline.create(user)
-    tasks = Enum.map(task.chunks, fn(c) -> do_invoke(user, task, c, timeline, tags) end)
-    Enum.first(tasks)
-  end
-
-  defp do_invoke(user, task, chunk, timeline, tags) do
-    request = Exrtm.API.create_request_param(user,
-                [method: "rtm.tasks.addTags", timeline: timeline, list_id: task.list_id,
-                 taskseries_id: task.id, task_id: chunk.id, tags: tags])
-    Exrtm.API.Tasks.Base.handle_single_item(user, request)
+    Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.addTags", [tags: tags])
   end
 end
 
 defmodule Exrtm.API.Tasks.RemoveTags do
   def invoke(user, task, tags) do
-    if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
-
-    timeline = Exrtm.Timeline.create(user)
-    tasks = Enum.map(task.chunks, fn(c) -> do_invoke(user, task, c, timeline, tags) end)
-    Enum.first(tasks)
-  end
-
-  defp do_invoke(user, task, chunk, timeline, tags) do
-    request = Exrtm.API.create_request_param(user,
-                [method: "rtm.tasks.removeTags", timeline: timeline, list_id: task.list_id,
-                 taskseries_id: task.id, task_id: chunk.id, tags: tags])
-    Exrtm.API.Tasks.Base.handle_single_item(user, request)
+    Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.removeTags", [tags: tags])
   end
 end
