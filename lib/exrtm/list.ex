@@ -9,7 +9,7 @@ defmodule Exrtm.List do
   @doc """
   Returns all the registered lists.
   """
-  def alive_all(user) do
+  def get_list(user) do
     lists = Exrtm.API.Lists.GetList.invoke(user)
     Enum.map(lists, fn(e) -> parse_list(e) end)
   end
@@ -17,8 +17,8 @@ defmodule Exrtm.List do
   @doc """
   Returns a list that maches the specified name.
   """
-  def find(user, name) do
-    lists = alive_all(user)
+  def get_by_name(user, name) do
+    lists = get_list(user)
     Enum.find(lists, fn(e) -> e.name == name end)
   end
 

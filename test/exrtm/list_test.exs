@@ -6,14 +6,14 @@ defmodule Exrtm.ListTest do
 
   @mock_user [key: "key", secret: "secret", token: "token"]
 
-  test_with_mock "alive_all", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
-    response  = Exrtm.List.alive_all(@mock_user)
+  test_with_mock "get_list", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+    response  = Exrtm.List.get_list(@mock_user)
     assert(Enum.count(response) == 7)
     assert(Enum.first(response).name == "Inbox")
   end
 
-  test_with_mock "find", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
-    response = Exrtm.List.find(@mock_user, "New List")
+  test_with_mock "get_by_name", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+    response = Exrtm.List.get_by_name(@mock_user, "New List")
     assert(response.name == "New List")
   end
 
@@ -23,7 +23,7 @@ defmodule Exrtm.ListTest do
   end
 
   test_with_mock "delete valid list", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
-    list   = Exrtm.List.find(@mock_user, "New List")
+    list   = Exrtm.List.get_by_name(@mock_user, "New List")
     result = Exrtm.List.delete(@mock_user, list)
 
     assert(result != nil)

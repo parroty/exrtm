@@ -8,15 +8,15 @@ defmodule Exrtm.Task do
   @doc """
   Returns all the registered tasks.
   """
-  def find_all(user) do
+  def get_list(user) do
     Exrtm.API.Tasks.GetList.invoke(user)
   end
 
   @doc """
   Returns a task that maches the specified name.
   """
-  def find(user, name) do
-    tasks = find_all(user)
+  def get_by_name(user, name) do
+    tasks = get_list(user)
     Enum.find(tasks, fn(e) -> e.name == name end)
   end
 
