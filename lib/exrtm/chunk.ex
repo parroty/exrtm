@@ -1,6 +1,10 @@
 alias Exrtm.Util.Xml.XmlNode
 
 defmodule Exrtm.Chunk do
+  @moduledoc """
+  Represents the 'task' of RTM API. Its operation is provided through Exrtm.Task.
+  """
+
   defrecord Chunk, id: nil, completed: nil, added: nil, postponed: nil,
                    priority: nil, deleted: nil, has_due_time: nil,
                    estimate: nil, due: nil

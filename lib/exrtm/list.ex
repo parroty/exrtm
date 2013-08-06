@@ -1,23 +1,39 @@
 alias Exrtm.Util.Xml.XmlNode
 
 defmodule Exrtm.List do
+  @moduledoc """
+  Represents the 'list' of RTM API.
+  """
+
   defrecord List, id: nil, name: nil, deleted: nil, locked: nil,
                   archived: nil, position: nil, smart: nil, sort_order: nil
 
+  @doc """
+  Returns all the registered lists.
+  """
   def alive_all(user) do
     lists = Exrtm.API.Lists.GetList.invoke(user)
     Enum.map(lists, fn(e) -> parse_list(e) end)
   end
 
+  @doc """
+  Returns a list that maches the specified name.
+  """
   def find(user, name) do
     lists = alive_all(user)
     Enum.find(lists, fn(e) -> e.name == name end)
   end
 
+  @doc """
+  Creates a new list with the specified name.
+  """
   def add(user, name) do
     Exrtm.API.Lists.Add.invoke(user, name)
   end
 
+  @doc """
+  Deletes a specified list object.
+  """
   def delete(user, list) do
     Exrtm.API.Lists.Delete.invoke(user, list)
   end
