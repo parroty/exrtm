@@ -2,7 +2,7 @@ ExUnit.start
 
 defmodule Exrtm.Mock do
   @empty [url: "", response: ""]
-  @patterns [
+  @default_patterns [
     [url: %r/.*rtm.auth.getFrob.*/, response: "<frob>0a56717c3561e53584f292bb7081a533c197270c</frob>"],
     [url: %r/.*rtm.auth.getToken.*/, response_file: "test/fixtures/rtm.auth.getToken"],
     [url: %r/.*rtm.timelines.create.*/, response: "<timeline>12741021</timeline>"],
@@ -13,22 +13,44 @@ defmodule Exrtm.Mock do
     [url: %r/.*rtm.tasks.getList.*/, response_file: "test/fixtures/rtm.tasks.getList" ],
     [url: %r/.*rtm.tasks.delete.*/, response_file: "test/fixtures/rtm.tasks.delete" ]
   ]
+  @error_patterns [
+    [url: %r/.*rtm.tasks.add.*/, response_file: "test/fixtures/rtm.tasks.add.invalid" ]
+  ]
+
   # [error example]
   # <?xml version='1.0' encoding='UTF-8'?><rsp stat=\"fail\"><err code=\"320\" msg=\"list_id invalid or not provided\"/></rsp>"
 
-  # TODO : handle error case for more descriptive message
-  def read_file(file_name) do
+  defp read_file(file_name) do
     {:ok, content} = File.read(file_name)
     content
   end
 
   def request(url) do
-    item = Enum.find(@patterns, @empty, fn(x) -> Regex.match?(x[:url], url) end)
-    if item[:response_file] do
-      read_file(item[:response_file])
+    do_request([@default_patterns], url)
+  end
+
+  def request_error(url) do
+    do_request([@error_patterns, @default_patterns], url)
+  end
+
+  defp do_request(patterns_list, url) do
+    matches         = Enum.map(patterns_list, fn(patterns) -> find_item(patterns, url) end)
+    not_nil_matches = Enum.filter(matches, fn(x) -> x != nil end)
+
+    if Enum.count(not_nil_matches) == 0 do
+      raise "mock pattern specified in the test was not found."
     else
-      item[:response]
+      item = Enum.first(not_nil_matches)
+      if item[:response_file] do
+        read_file(item[:response_file])
+      else
+        item[:response]
+      end
     end
+  end
+
+  defp find_item(patterns, url) do
+    Enum.find(patterns, fn(x) -> Regex.match?(x[:url], url) end)
   end
 end
 

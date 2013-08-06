@@ -47,6 +47,12 @@ defmodule Exrtm.TaskTest do
     assert(task.list_id == "876543210")
   end
 
+  test_with_mock "add fails with invalid response", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request_error(url) end] do
+    assert_raise RuntimeError, fn ->
+      Exrtm.Task.add(@mock_user, "Get Bananas")
+    end
+  end
+
   test_with_mock "delete valid task", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     task   = Exrtm.Task.find(@mock_user, "Get Bananas")
     result = Exrtm.Task.delete(@mock_user, task)
