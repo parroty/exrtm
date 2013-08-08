@@ -1,8 +1,13 @@
 defmodule Exrtm.Util.HTTP do
-  # TODO : error handling
   def get(url) do
     :inets.start
-    {:ok, {_status, _headers, content}} = :httpc.request(binary_to_list(url))
-    list_to_binary(content)
+    {result, response} = :httpc.request(binary_to_list(url))
+
+    if result == :ok do
+      {_status, _headers, content} = response
+      list_to_binary(content)
+    else
+      raise ExrtmError.new(message: "http request failed - [url] " <> url)
+    end
   end
 end
