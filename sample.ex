@@ -1,23 +1,23 @@
-Code.require_file "lib/exrtm.ex", __DIR__
-
 defmodule ExrtmSample do
-  def operate_tasks(user) do
+  def operate_tasks(user, permission) do
     tasks = user |> Exrtm.Task.get_list()
-    # task  = user |> Exrtm.Task.add("xxx")
-    # count = user |> Exrtm.Task.delete(task)
 
     IO.puts "\n----operate_tasks----"
     IO.puts "<Tasks>"
     IO.puts Enum.join(Enum.map(tasks, fn(x) -> x.name end), ", ")
-    # IO.puts "<Task>"
-    # IO.inspect task
-    # IO.puts "<Count>"
-    # IO.inspect count
+
+    if permission == "delete" do
+      task = user |> Exrtm.Task.add("xxx")
+      user |> Exrtm.Task.delete(task)
+
+      IO.puts "<Task>"
+      IO.inspect task
+    end
   end
 
   def operate_lists(user) do
     lists = user |> Exrtm.List.get_list()
-    inbox = user |> Exrtm.List.find("Inbox")
+    inbox = user |> Exrtm.List.get_by_name("Inbox")
 
     IO.puts "\n----operate_lists----"
     IO.puts "<Lists>"
@@ -27,11 +27,15 @@ defmodule ExrtmSample do
   end
 end
 
-use_token = false # set true for using token
-
 key    = :os.getenv("RTM_API_KEY")        # your api_key of remember the milk
 secret = :os.getenv("RTM_SHARED_SECRET")  # your shared secret of remember the milk
-perm   = "read"                           # "read", "write" or "delete"
+
+# specify '-t' to use pre-acquired token (stored in RTM_TOKEN environment variable), instead of frob.
+{option, _argv} = OptionParser.parse(System.argv, aliases: [t: :token, p: :permission])
+use_token = option[:token] != nil
+perm      = Enum.find(["read", "write", "delete"], "read", fn(x) -> x == option[:permission] end)
+
+IO.puts "[option] use_token = #{use_token}, perm = #{perm}"
 
 if use_token do
   token = :os.getenv("RTM_TOKEN")         # use pre-stored token to authenticate
@@ -50,4 +54,4 @@ else
 end
 
 ExrtmSample.operate_lists(user)
-ExrtmSample.operate_tasks(user)
+ExrtmSample.operate_tasks(user, perm)

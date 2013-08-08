@@ -29,7 +29,7 @@ $ export RTM_SHARED_SECRET="your shared secret"
 #### Run script
 
 ```
-$ ./sample.sh
+$ ./run_sample.sh
 Access to the following url using browser to authenticate this script, and then press enter to proceed.
 http://www.rememberthemilk.com/services/auth/xxxxxx
 
@@ -48,11 +48,11 @@ test2, completed task 2, RTMAPITEST, test, completed task 1
 ```
 
 ## Usage
-sample.ex and tests covers the usage examples.
+sample.ex and 'test' folder contents cover some of the usage examples.
 
 ## Notes
 It's started for learning Elixir, and only some part of the API is implemented at the moment.
 
-Referenced the followings for implementing the library.
+Referenced the followings for the implemention.
 - <a href="https://github.com/mootoh/rtmilk" target="_blank">https://github.com/mootoh/rtmilk</a>
 - <a href="https://gist.github.com/sasa1977/5967224" target="_blank">https://gist.github.com/sasa1977/5967224</a>
