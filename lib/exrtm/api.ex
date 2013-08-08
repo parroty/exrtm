@@ -1,3 +1,5 @@
+alias Exrtm.Util.Xml.XmlNode
+
 defmodule Exrtm.API do
   @rtm_uri   "http://www.rememberthemilk.com"
   @rest_path "/services/rest/"
@@ -17,10 +19,19 @@ defmodule Exrtm.API do
     @rtm_uri <> @auth_path <> do_make_url(user[:secret], params)
   end
 
-  # TODO : error handling
   def do_request(user, request) do
     url = @rtm_uri <> make_url(user[:secret], request)
-    Exrtm.Util.HTTP.get(url)
+    response = Exrtm.Util.HTTP.get(url)
+
+    stat = XmlNode.from_string(response)
+            |> XmlNode.first("//rsp")
+            |> XmlNode.attr("stat")
+
+    if stat == "fail" do
+      raise ExrtmError.new(message: "Error returned from the server. [response] " <> response)
+    else
+      response
+    end
   end
 
   def create_request_param(user, params) do

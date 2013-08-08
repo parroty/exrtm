@@ -35,6 +35,12 @@ defmodule Exrtm.TaskTest do
     assert(chunk.due          == "")
   end
 
+  test_with_mock "get task list with invalid token fails", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request_error(url) end] do
+    assert_raise ExrtmError, fn ->
+      Exrtm.Task.get_list(@mock_user)
+    end
+  end
+
   test_with_mock "get task by the name", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     task = Exrtm.Task.get_by_name(@mock_user, "2ndTask")
     assert(task.id == "234567891")

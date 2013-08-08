@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+  <rsp stat="fail">
+    <err code="98" msg="Login failed / Invalid auth token"/>
+  </rsp>
