@@ -152,4 +152,10 @@ defmodule Exrtm.API.Tasks do
       Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.setPriority", [priority: priority])
     end
   end
+
+  defmodule SetName do
+    def invoke(user, task, name) do
+      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.setName", [name: name])
+    end
+  end
 end

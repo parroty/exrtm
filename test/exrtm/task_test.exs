@@ -100,7 +100,6 @@ defmodule Exrtm.TaskTest do
     assert(result.tags  == "coffee,mmm")
   end
 
-
   test_with_mock "set priority", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.set_priority(@mock_user, task, "2")
@@ -108,4 +107,10 @@ defmodule Exrtm.TaskTest do
     assert(Enum.first(result.chunks).priority == "2")
   end
 
+  test_with_mock "set name", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+    task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
+    result = Exrtm.Task.set_name(@mock_user, task, "Get Coffee")
+
+    assert(result.name == "Get Coffee")
+  end
 end

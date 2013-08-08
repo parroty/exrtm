@@ -69,4 +69,11 @@ defmodule Exrtm.Task do
   def set_priority(user, task, priority) do
     Exrtm.API.Tasks.SetPriority.invoke(user, task, priority)
   end
+
+  @doc """
+  Set name for the specified task.
+  """
+  def set_name(user, task, name) do
+    Exrtm.API.Tasks.SetName.invoke(user, task, name)
+  end
 end
