@@ -146,4 +146,10 @@ defmodule Exrtm.API.Tasks do
       Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.removeTags", [tags: tags])
     end
   end
+
+  defmodule SetPriority do
+    def invoke(user, task, priority) do
+      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.setPriority", [priority: priority])
+    end
+  end
 end

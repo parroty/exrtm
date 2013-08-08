@@ -61,4 +61,12 @@ defmodule Exrtm.Task do
   def remove_tags(user, task, tags) do
     Exrtm.API.Tasks.RemoveTags.invoke(user, task, tags)
   end
+
+  @doc """
+  Set priority for the specified task.
+  Priority can be '1', '2', '3', and other value is taken as 'no priority'.
+  """
+  def set_priority(user, task, priority) do
+    Exrtm.API.Tasks.SetPriority.invoke(user, task, priority)
+  end
 end
