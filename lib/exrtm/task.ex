@@ -83,4 +83,12 @@ defmodule Exrtm.Task do
   def postpone(user, task) do
     Exrtm.API.Tasks.Postpone.invoke(user, task)
   end
+
+  @doc """
+  Set URL for the specified task.
+  """
+  def set_url(user, task, url) do
+    Exrtm.API.Tasks.SetURL.invoke(user, task, url)
+  end
+
 end

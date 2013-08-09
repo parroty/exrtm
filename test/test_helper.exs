@@ -20,7 +20,8 @@ defmodule Exrtm.Mock do
     [url: %r/.*rtm.tasks.delete&.*/, response_file: "test/fixtures/rtm.tasks.delete" ],
     [url: %r/.*rtm.tasks.setPriority&.*/, response_file: "test/fixtures/rtm.tasks.setPriority" ],
     [url: %r/.*rtm.tasks.setName&.*/, response_file: "test/fixtures/rtm.tasks.setName" ],
-    [url: %r/.*rtm.tasks.postpone&.*/, response_file: "test/fixtures/rtm.tasks.postpone" ]
+    [url: %r/.*rtm.tasks.postpone&.*/, response_file: "test/fixtures/rtm.tasks.postpone" ],
+    [url: %r/.*rtm.tasks.setURL&.*/, response_file: "test/fixtures/rtm.tasks.setURL" ]
   ]
   @error_patterns [
     [url: %r/.*rtm.tasks.add&.*/, response_file: "test/fixtures/rtm.tasks.add.invalid" ],

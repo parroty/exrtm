@@ -123,4 +123,11 @@ defmodule Exrtm.TaskTest do
     assert(Enum.first(result.chunks).postponed == "1")
   end
 
+  @set_url_verify [pre_condition: "rtm.tasks.setURL", expected_match: "http://www.myfavoritecoffeeplace.com/"]
+  test_with_mock "set url", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url, @set_url_verify) end] do
+    task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
+    result = Exrtm.Task.set_url(@mock_user, task, "http://www.myfavoritecoffeeplace.com/")
+
+    assert(result.url == "http://www.myfavoritecoffeeplace.com/")
+  end
 end
