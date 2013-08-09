@@ -35,11 +35,11 @@ defmodule Exrtm.Mock do
   end
 
   defp read_file(file_name) do
-    {ret, content} = File.read(file_name)
-    if ret == :ok do
-      content
-    else
-      raise "file not found : file_name = #{file_name}"
+    case File.read(file_name) do
+      {:ok, content} ->
+        content
+      {:error, _content} ->
+        raise "file not found : file_name = #{file_name}"
     end
   end
 
