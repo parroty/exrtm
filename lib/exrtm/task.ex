@@ -76,4 +76,11 @@ defmodule Exrtm.Task do
   def set_name(user, task, name) do
     Exrtm.API.Tasks.SetName.invoke(user, task, name)
   end
+
+  @doc """
+  Postpone the specified task.
+  """
+  def postpone(user, task) do
+    Exrtm.API.Tasks.Postpone.invoke(user, task)
+  end
 end

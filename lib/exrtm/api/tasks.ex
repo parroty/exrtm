@@ -76,7 +76,8 @@ defmodule Exrtm.API.Tasks do
         deleted:      element |> XmlNode.attr("deleted"),
         has_due_time: element |> XmlNode.attr("has_due_time"),
         estimate:     element |> XmlNode.attr("estimate"),
-        due:          element |> XmlNode.attr("due")
+        due:          element |> XmlNode.attr("due"),
+        postponed:    element |> XmlNode.attr("postponed")
       )
     end
   end
@@ -156,6 +157,12 @@ defmodule Exrtm.API.Tasks do
   defmodule SetName do
     def invoke(user, task, name) do
       Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.setName", [name: name])
+    end
+  end
+
+  defmodule Postpone do
+    def invoke(user, task) do
+      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.postpone")
     end
   end
 end

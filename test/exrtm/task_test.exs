@@ -115,4 +115,12 @@ defmodule Exrtm.TaskTest do
 
     assert(result.name == "Get Coffee")
   end
+
+  test_with_mock "postpone", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+    task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
+    result = Exrtm.Task.postpone(@mock_user, task)
+
+    assert(Enum.first(result.chunks).postponed == "1")
+  end
+
 end
