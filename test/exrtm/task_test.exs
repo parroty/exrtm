@@ -86,14 +86,16 @@ defmodule Exrtm.TaskTest do
     assert(Enum.first(result.chunks).completed == "")
   end
 
-  test_with_mock "add tags", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+  @add_tags_verify [pre_condition: "rtm.tasks.addTags", expected_match: "tags=coffee,good,mmm"]
+  test_with_mock "add tags", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url, @add_tags_verify) end] do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.add_tags(@mock_user, task, "coffee,good,mmm")
 
     assert(result.tags  == "coffee,good,mmm")
   end
 
-  test_with_mock "remove tags", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
+  @remove_tags_verify [pre_condition: "rtm.tasks.removeTags", expected_match: "tags=good"]
+  test_with_mock "remove tags", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url, @remove_tags_verify) end] do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.remove_tags(@mock_user, task, "good")
 
