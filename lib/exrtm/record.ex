@@ -1,5 +1,9 @@
 
 defmodule Exrtm.Record do
+  @moduledoc """
+  An module that contains set of record objects
+  """
+
   defrecord Chunk, id: nil, completed: nil, added: nil, postponed: nil,
                    priority: nil, deleted: nil, has_due_time: nil,
                    estimate: nil, due: nil
