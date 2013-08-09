@@ -24,20 +24,21 @@ defmodule Exrtm.Mock do
     [url: %r/.*rtm.tasks.getList&.*/, response_file: "test/fixtures/rtm.tasks.getList.invalid" ]
   ]
 
-  # [error example]
-  # <?xml version='1.0' encoding='UTF-8'?><rsp stat=\"fail\"><err code=\"320\" msg=\"list_id invalid or not provided\"/></rsp>"
-
-  defp read_file(file_name) do
-    {:ok, content} = File.read(file_name)
-    content
-  end
-
   def request(url) do
     do_request([@default_patterns], url)
   end
 
   def request_error(url) do
     do_request([@error_patterns, @default_patterns], url)
+  end
+
+  defp read_file(file_name) do
+    {ret, content} = File.read(file_name)
+    if ret == :ok do
+      content
+    else
+      raise "file not found : file_name = #{file_name}"
+    end
   end
 
   defp do_request(patterns_list, url) do
