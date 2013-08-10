@@ -1,6 +1,6 @@
 Code.require_file "../test_helper.exs", __DIR__
 
-defmodule RTM.HTTPTest do
+defmodule Exrtm.HTTPTest do
   use ExUnit.Case
 
   @url "http://www.rememberthemilk.com/services/rest/"
