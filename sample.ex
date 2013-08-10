@@ -39,17 +39,17 @@ IO.puts "[option] use_token = #{use_token}, perm = #{perm}"
 
 if use_token do
   token = :os.getenv("RTM_TOKEN")         # use pre-stored token to authenticate
-  user  = Exrtm.init_api(key, secret, token)
+  user  = Exrtm.Auth.init_api(key, secret, token)
 else
-  user = Exrtm.init_api(key, secret)
-  frob = Exrtm.get_frob(user)
+  user = Exrtm.Auth.init_api(key, secret)
+  frob = Exrtm.Auth.get_frob(user)
 
   IO.puts "Access to the following url using browser to authenticate this script, and then press enter to proceed."
-  IO.puts Exrtm.get_auth_url(user, perm, frob)
+  IO.puts Exrtm.Auth.get_auth_url(user, perm, frob)
   IO.gets ""
 
-  token = Exrtm.get_token(user, frob)
-  user  = Exrtm.init_api(key, secret, token)
+  token = Exrtm.Auth.get_token(user, frob)
+  user  = Exrtm.Auth.init_api(key, secret, token)
   IO.puts "token = #{token}"
 end
 
