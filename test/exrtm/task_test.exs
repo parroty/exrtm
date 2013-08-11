@@ -138,4 +138,13 @@ defmodule Exrtm.TaskTest do
 
     assert(result.rrule == "FREQ=DAILY;INTERVAL=1")
   end
+
+  @move_priority_verify [pre_condition: "rtm.tasks.movePriority", expected_match: "direction=down"]
+  test_with_mock "move priority", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url, @move_priority_verify) end] do
+    task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
+    result = Exrtm.Task.move_priority(@mock_user, task, "down")
+
+    assert(Enum.first(result.chunks).priority == "3")
+  end
+
 end

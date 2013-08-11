@@ -97,4 +97,13 @@ defmodule Exrtm.Task do
   def set_recurrence(user, task, recurrence) do
     Exrtm.API.Tasks.SetRecurrence.invoke(user, task, recurrence)
   end
+
+  @doc """
+  Move the priority of the specified task up or down.
+  direction can be either 'up' or 'down'.
+  """
+  def move_priority(user, task, direction) do
+    Exrtm.API.Tasks.MovePriority.invoke(user, task, direction)
+  end
+
 end

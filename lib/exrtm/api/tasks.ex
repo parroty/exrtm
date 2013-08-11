@@ -177,4 +177,10 @@ defmodule Exrtm.API.Tasks do
       Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.setRecurrence", [repeat: recurrence])
     end
   end
+
+  defmodule MovePriority do
+    def invoke(user, task, direction) do
+      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.movePriority", [direction: direction])
+    end
+  end
 end
