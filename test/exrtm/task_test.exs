@@ -130,4 +130,12 @@ defmodule Exrtm.TaskTest do
 
     assert(result.url == "http://www.myfavoritecoffeeplace.com/")
   end
+
+  @set_recurrence_verify [pre_condition: "rtm.tasks.setRecurrence", expected_match: "repeat=daily"]
+  test_with_mock "set recurrence", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url, @set_recurrence_verify) end] do
+    task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
+    result = Exrtm.Task.set_recurrence(@mock_user, task, "daily")
+
+    assert(result.rrule == "FREQ=DAILY;INTERVAL=1")
+  end
 end

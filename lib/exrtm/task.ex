@@ -91,4 +91,10 @@ defmodule Exrtm.Task do
     Exrtm.API.Tasks.SetURL.invoke(user, task, url)
   end
 
+  @doc """
+  Set recurrence pattern for the specified task.
+  """
+  def set_recurrence(user, task, recurrence) do
+    Exrtm.API.Tasks.SetRecurrence.invoke(user, task, recurrence)
+  end
 end

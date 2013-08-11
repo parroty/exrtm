@@ -171,4 +171,10 @@ defmodule Exrtm.API.Tasks do
       Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.setURL", [url: url])
     end
   end
+
+  defmodule SetRecurrence do
+    def invoke(user, task, recurrence) do
+      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.setRecurrence", [repeat: recurrence])
+    end
+  end
 end
