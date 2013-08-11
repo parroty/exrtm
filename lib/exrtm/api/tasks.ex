@@ -183,4 +183,11 @@ defmodule Exrtm.API.Tasks do
       Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.movePriority", [direction: direction])
     end
   end
+
+  defmodule SetDueDate do
+    def invoke(user, task, due, has_due_time, parse) do
+      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.setDueDate",
+                                          [due: due, has_due_time: has_due_time, parse: parse])
+    end
+  end
 end

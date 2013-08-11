@@ -99,11 +99,20 @@ defmodule Exrtm.Task do
   end
 
   @doc """
-  Move the priority of the specified task up or down.
+  Move the priority of the specified task.
   direction can be either 'up' or 'down'.
   """
   def move_priority(user, task, direction) do
     Exrtm.API.Tasks.MovePriority.invoke(user, task, direction)
   end
 
+
+  @doc """
+  Set due date of the the specified task.
+  If due has time along with date, specify '1' for 'has_due_time'.
+  If parse date needs to be skipped, specify '0' for 'parse'.
+  """
+  def set_due_date(user, task, due, has_due_time // "0", parse // "1") do
+    Exrtm.API.Tasks.SetDueDate.invoke(user, task, due, has_due_time, parse)
+  end
 end

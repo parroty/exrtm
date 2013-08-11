@@ -147,4 +147,11 @@ defmodule Exrtm.TaskTest do
     assert(Enum.first(result.chunks).priority == "3")
   end
 
+  @set_due_date_verify [pre_condition: "rtm.tasks.setDueDate", expected_match: "due=2006-05-09T14:00:00Z"]
+  test_with_mock "set due date", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url, @set_due_date_verify) end] do
+    task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
+    result = Exrtm.Task.set_due_date(@mock_user, task, "2006-05-09T14:00:00Z", "1")
+
+    assert(Enum.first(result.chunks).due == "2006-05-09T14:00:00Z")
+  end
 end
