@@ -1,4 +1,7 @@
 defmodule Exrtm.Util.HTTP do
+  @doc """
+  Get the content of the specified URL.
+  """
   def get(url) do
     :inets.start
     {result, response} = :httpc.request(binary_to_list(url))
