@@ -9,4 +9,11 @@ defmodule Exrtm do
   - Exrtm.Timeline
 
   """
+
+  @doc """
+  An utility method for displaying record information.
+  """
+  def puts(data) do
+    Binary.Exrtm.puts(data)
+  end
 end
