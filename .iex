@@ -1,0 +1,22 @@
+defmodule IEXUtil do
+  def load_check(key, secret, token) do
+    try do
+      Exrtm.Auth.init_api(key, secret, token)
+      true
+    rescue
+      [UndefinedFunctionError] -> false
+    end
+  end
+end
+
+key    = :os.getenv("RTM_API_KEY")        # your api_key of remember the milk
+secret = :os.getenv("RTM_SHARED_SECRET")  # your shared secret of remember the milk
+token  = :os.getenv("RTM_TOKEN")          # use pre-stored token to authenticate
+
+if IEXUtil.load_check(key, secret, token) == true do
+  user = Exrtm.Auth.init_api(key, secret, token)
+else
+  IO.puts "[Warning] tried to load Exrtm library, but failed.\n"
+end
+
+# use user variable for trying out Exrtm features on iex.
