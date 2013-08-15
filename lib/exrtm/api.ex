@@ -1,6 +1,10 @@
 alias Exrtm.Util.Xml.XmlNode
 
 defmodule Exrtm.API do
+  @moduledoc """
+  Provides initial infrastractures to call remember the milk APIs.
+  """
+
   @rtm_uri   "http://www.rememberthemilk.com"
   @rest_path "/services/rest/"
   @auth_path "/services/auth/"

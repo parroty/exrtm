@@ -1,13 +1,12 @@
 alias Exrtm.Util.Xml.XmlNode
 alias Exrtm.Record.Task
-alias Exrtm.Record.Chunk
 
 defmodule Exrtm.API.Tasks do
-  defmodule Base do
-    @moduledoc """
-    Provides basic processing for task API.
-    """
+  @moduledoc """
+  Provides basic processing for task API.
+  """
 
+  defmodule Base do
     @doc """
     Handle requests which involves single item like add and delete operations.
     """

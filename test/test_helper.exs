@@ -24,7 +24,8 @@ defmodule Exrtm.Mock do
     [url: %r/.*rtm.tasks.setURL&.*/, response_file: "test/fixtures/rtm.tasks.setURL" ],
     [url: %r/.*rtm.tasks.setRecurrence&.*/, response_file: "test/fixtures/rtm.tasks.setRecurrence" ],
     [url: %r/.*rtm.tasks.movePriority&.*/, response_file: "test/fixtures/rtm.tasks.movePriority" ],
-    [url: %r/.*rtm.tasks.setDueDate&.*/, response_file: "test/fixtures/rtm.tasks.setDueDate" ]
+    [url: %r/.*rtm.tasks.setDueDate&.*/, response_file: "test/fixtures/rtm.tasks.setDueDate" ],
+    [url: %r/.*rtm.test.echo&.*/, response: "<method>rtm.test.echo</method>" ]
   ]
   @error_patterns [
     [url: %r/.*rtm.tasks.add&.*/, response_file: "test/fixtures/rtm.tasks.add.invalid" ],

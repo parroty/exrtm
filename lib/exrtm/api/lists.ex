@@ -2,6 +2,10 @@ alias Exrtm.Util.Xml.XmlNode
 alias Exrtm.Record.List
 
 defmodule Exrtm.API.Lists do
+  @moduledoc """
+  Provides basic processing for lists API.
+  """
+
   defmodule Base do
     @doc """
     Handle requests which involves single item like add and delete operations.
