@@ -26,7 +26,7 @@ $ export RTM_API_KEY="your api key"
 $ export RTM_SHARED_SECRET="your shared secret"
 ```
 
-#### Run script
+#### Run with script
 
 ```
 $ ./run_sample.sh
@@ -45,6 +45,31 @@ smart: "0", sort_order: "0"]
 ----operate_tasks----
 <Tasks>
 test2, completed task 2, RTMAPITEST, test, completed task 1
+```
+
+### Run with iex
+Specify environment variables in advance.
+
+```
+$ export RTM_API_KEY="your api key"
+$ export RTM_SHARED_SECRET="your shared secret"
+$ export RTM_TOKEN="pre-acquired authentication token"
+```
+
+Then run the "run_iex.sh". It loads up ".iex" and load related libraries based on environment variables.
+
+```
+$ ./run_iex.sh
+iex(1)> user
+[key: 'xxxx', secret: 'yyyy', token: 'zzzz']
+
+iex(2)> user |> Exrtm.Task.get_list |> Exrtm.puts
+completed task 1
+RTMAPITEST
+repeat1
+test2
+:ok
+iex(3)>
 ```
 
 ## Usage
