@@ -10,6 +10,8 @@
            completed="" deleted="" priority="N" postponed="0" estimate=""/>
     </taskseries>
     <taskseries id="234567891" name="2ndTask">
+      <task id="765432109" due="" has_due_time="0" added="2006-05-07T10:19:54Z"
+           completed="" deleted="" priority="N" postponed="0" estimate=""/>
     </taskseries>
     <deleted>
       <taskseries id="650390">

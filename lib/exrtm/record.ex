@@ -4,13 +4,11 @@ defmodule Exrtm.Record do
   An module that contains set of record objects
   """
 
-  defrecord Chunk, id: nil, completed: nil, added: nil, postponed: nil,
-                   priority: nil, deleted: nil, has_due_time: nil,
-                   estimate: nil, due: nil
-
-  defrecord Task, id: nil, name: nil, tags: nil, modified: nil, participants: nil,
-                  url: nil, created: nil, source: nil, rrule: nil,
-                  chunks: nil, list_id: nil
+  defrecord Task, id: nil, series_id: nil, name: nil, tags: nil, modified: nil, participants: nil,
+                  url: nil, created: nil, source: nil, rrule: nil, list_id: nil,
+                  completed: nil, added: nil, postponed: nil,
+                  priority: nil, deleted: nil, has_due_time: nil,
+                  estimate: nil, due: nil
 
   defrecord List, id: nil, name: nil, deleted: nil, locked: nil,
                   archived: nil, position: nil, smart: nil, sort_order: nil

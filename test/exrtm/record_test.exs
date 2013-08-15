@@ -6,7 +6,6 @@ defmodule Exrtm.RecordTest do
 
   alias Exrtm.Record.List
   alias Exrtm.Record.Task
-  alias Exrtm.Record.Chunk
 
   @list "[List]\n" <>
         "  id = 1\n" <>
@@ -27,6 +26,7 @@ defmodule Exrtm.RecordTest do
 
   @task "[Task]\n" <>
         "  id = 2\n" <>
+        "  series_id = 3\n" <>
         "  name = test_task\n" <>
         "  tags = nil\n" <>
         "  modified = nil\n" <>
@@ -35,11 +35,18 @@ defmodule Exrtm.RecordTest do
         "  created = nil\n" <>
         "  source = nil\n" <>
         "  rrule = nil\n" <>
-        "  chunks = [2 items]\n" <>
-        "  list_id = nil\n"
+        "  list_id = nil\n" <>
+        "  completed = nil\n" <>
+        "  added = nil\n" <>
+        "  postponed = nil\n" <>
+        "  priority = nil\n" <>
+        "  deleted = nil\n" <>
+        "  has_due_time = nil\n" <>
+        "  estimate = nil\n" <>
+        "  due = nil\n"
 
   test "IO.puts for Task" do
-    task = Task.new(id: 2, name: "test_task", chunks: [Chunk.new, Chunk.new])
+    task = Task.new(id: 2, series_id: 3, name: "test_task")
     assert capture_io(fn ->
       IO.puts task
     end) == @task

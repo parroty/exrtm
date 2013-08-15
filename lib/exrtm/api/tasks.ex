@@ -16,7 +16,7 @@ defmodule Exrtm.API.Tasks do
       list = XmlNode.from_string(response)
                |> XmlNode.first("//list")
 
-      tasks = parse_task(list)
+      tasks = parse_list(list)
       count = Enum.count(tasks)
       if count > 1 do raise ExrtmError.new(message: "expected single task, but #{count} tasks returned.") end
       Enum.first(tasks)
@@ -31,31 +31,31 @@ defmodule Exrtm.API.Tasks do
                |> XmlNode.first("//tasks")
                |> XmlNode.all("//list")
 
-      List.flatten(Enum.map(list, fn(e) -> parse_task(e) end))
+      List.flatten(Enum.map(list, fn(e) -> parse_list(e) end))
     end
 
-    defp parse_task(element) do
+    defp parse_list(element) do
       list_id    = element |> XmlNode.attr("id")
       taskseries = element |> XmlNode.all("taskseries")
-      Enum.map(taskseries, fn(e) -> parse_taskseries(e, list_id) end)
+      List.flatten(Enum.map(taskseries, fn(e) -> parse_taskseries(e, list_id) end))
     end
 
     defp parse_taskseries(element, list_id) do
-      chunks = parse_chunks(element |> XmlNode.all("task"))
+      taskseries = [
+        series_id:     element |> XmlNode.attr("id"),
+        name:          element |> XmlNode.attr("name"),
+        modified:      element |> XmlNode.attr("modified"),
+        tags:          element |> XmlNode.first("tags") |> parse_tags,
+        participants:  element |> XmlNode.first("participants") |> XmlNode.text,
+        url:           element |> XmlNode.attr("url"),
+        created:       element |> XmlNode.attr("created"),
+        source:        element |> XmlNode.attr("source"),
+        rrule:         element |> XmlNode.first("rrule") |> XmlNode.text,
+        list_id:       list_id
+      ]
 
-      Task.new(
-        id:           element |> XmlNode.attr("id"),
-        name:         element |> XmlNode.attr("name"),
-        modified:     element |> XmlNode.attr("modified"),
-        tags:         element |> XmlNode.first("tags") |> parse_tags,
-        participants: element |> XmlNode.first("participants") |> XmlNode.text,
-        url:          element |> XmlNode.attr("url"),
-        created:      element |> XmlNode.attr("created"),
-        source:       element |> XmlNode.attr("source"),
-        rrule:        element |> XmlNode.first("rrule") |> XmlNode.text,
-        list_id:      list_id,
-        chunks:       chunks
-      )
+      tasks = parse_tasks(element |> XmlNode.all("task"))
+      Enum.map(tasks, fn(task) -> task.update(taskseries) end)
     end
 
     defp parse_tags(element) do
@@ -63,12 +63,12 @@ defmodule Exrtm.API.Tasks do
       Enum.join(Enum.map(tags, fn(tag) -> tag |> XmlNode.text end), ",")
     end
 
-    defp parse_chunks(elements) do
-      Enum.map(elements, fn(e) -> parse_chunk(e) end)
+    defp parse_tasks(elements) do
+      Enum.map(elements, fn(e) -> parse_task(e) end)
     end
 
-    defp parse_chunk(element) do
-      Chunk.new(
+    defp parse_task(element) do
+      Task.new(
         id:           element |> XmlNode.attr("id"),
         completed:    element |> XmlNode.attr("completed"),
         added:        element |> XmlNode.attr("added"),
@@ -91,14 +91,9 @@ defmodule Exrtm.API.Tasks do
       if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
 
       timeline = Exrtm.Timeline.create(user)
-      tasks = Enum.map(task.chunks, fn(chunk) -> do_invoke(user, task, chunk, timeline, method, options) end)
-      Enum.first(tasks)
-    end
-
-    defp do_invoke(user, task, chunk, timeline, method, options) do
-      request = Exrtm.API.create_request_param(user,
+      request  = Exrtm.API.create_request_param(user,
                   [method: method, timeline: timeline, list_id: task.list_id,
-                   taskseries_id: task.id, task_id: chunk.id])
+                   taskseries_id: task.series_id, task_id: task.id])
       Exrtm.API.Tasks.Base.process_single_item(user, request ++ options)
     end
   end

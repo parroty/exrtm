@@ -11,7 +11,7 @@ defmodule Exrtm.TaskTest do
     assert(Enum.count(tasks) == 2)
 
     task = Enum.first(tasks)
-    assert(task.id           == "123456789")
+    assert(task.series_id    == "123456789")
     assert(task.name         == "Get Bananas")
     assert(task.modified     == "2006-05-07T10:19:54Z")
     assert(task.tags         == "")
@@ -22,17 +22,14 @@ defmodule Exrtm.TaskTest do
     assert(task.rrule        == "FREQ=DAILY;INTERVAL=1")
     assert(task.list_id      == "876543210")
 
-    assert(Enum.count(task.chunks) == 1)
-
-    chunk = Enum.first(task.chunks)
-    assert(chunk.id           == "987654321")
-    assert(chunk.completed    == "")
-    assert(chunk.added        == "2006-05-07T10:19:54Z")
-    assert(chunk.priority     == "N")
-    assert(chunk.deleted      == "")
-    assert(chunk.has_due_time == "0")
-    assert(chunk.estimate     == "")
-    assert(chunk.due          == "")
+    assert(task.id           == "987654321")
+    assert(task.completed    == "")
+    assert(task.added        == "2006-05-07T10:19:54Z")
+    assert(task.priority     == "N")
+    assert(task.deleted      == "")
+    assert(task.has_due_time == "0")
+    assert(task.estimate     == "")
+    assert(task.due          == "")
   end
 
   test_with_mock "get task list with invalid token fails", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request_error(url) end] do
@@ -43,14 +40,16 @@ defmodule Exrtm.TaskTest do
 
   test_with_mock "get task by the name", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     task = Exrtm.Task.get_by_name(@mock_user, "2ndTask")
-    assert(task.id == "234567891")
+    assert(task.id        == "765432109")
+    assert(task.series_id == "234567891")
   end
 
   test_with_mock "add task", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     task = Exrtm.Task.add(@mock_user, "Get Bananas")
-    assert(task.id      == "987654321")
-    assert(task.name    == "Get Bananas")
-    assert(task.list_id == "876543210")
+    assert(task.id        == "123456789")
+    assert(task.series_id == "987654321")
+    assert(task.name      == "Get Bananas")
+    assert(task.list_id   == "876543210")
   end
 
   test_with_mock "add task fails with invalid response", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request_error(url) end] do
@@ -63,7 +62,7 @@ defmodule Exrtm.TaskTest do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.delete(@mock_user, task)
 
-    assert(Enum.first(result.chunks).deleted != "")
+    assert(result.deleted != "")
   end
 
   test_with_mock "delete invalid task throws exception", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
@@ -76,14 +75,14 @@ defmodule Exrtm.TaskTest do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.complete(@mock_user, task)
 
-    assert(Enum.first(result.chunks).completed != "")
+    assert(result.completed != "")
   end
 
   test_with_mock "uncompletes task", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.uncomplete(@mock_user, task)
 
-    assert(Enum.first(result.chunks).completed == "")
+    assert(result.completed == "")
   end
 
   @add_tags_verify [pre_condition: "rtm.tasks.addTags", expected_match: "tags=coffee,good,mmm"]
@@ -106,7 +105,7 @@ defmodule Exrtm.TaskTest do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.set_priority(@mock_user, task, "2")
 
-    assert(Enum.first(result.chunks).priority == "2")
+    assert(result.priority == "2")
   end
 
   test_with_mock "set name", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
@@ -120,7 +119,7 @@ defmodule Exrtm.TaskTest do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.postpone(@mock_user, task)
 
-    assert(Enum.first(result.chunks).postponed == "1")
+    assert(result.postponed == "1")
   end
 
   @set_url_verify [pre_condition: "rtm.tasks.setURL", expected_match: "http://www.myfavoritecoffeeplace.com/"]
@@ -144,7 +143,7 @@ defmodule Exrtm.TaskTest do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.move_priority(@mock_user, task, "down")
 
-    assert(Enum.first(result.chunks).priority == "3")
+    assert(result.priority == "3")
   end
 
   @set_due_date_verify [pre_condition: "rtm.tasks.setDueDate", expected_match: "due=2006-05-09T14:00:00Z"]
@@ -152,6 +151,6 @@ defmodule Exrtm.TaskTest do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.set_due_date(@mock_user, task, "2006-05-09T14:00:00Z", "1")
 
-    assert(Enum.first(result.chunks).due == "2006-05-09T14:00:00Z")
+    assert(result.due == "2006-05-09T14:00:00Z")
   end
 end
