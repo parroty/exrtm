@@ -4,7 +4,7 @@ defmodule Exrtm.Util.HTTP do
   """
   def get(url) do
     :inets.start
-    {result, response} = :httpc.request(binary_to_list(url))
+    {result, response} = :httpc.request(:binary.bin_to_list(url))
 
     if result == :ok do
       {_status, _headers, content} = response
