@@ -12,8 +12,9 @@ defmodule Exrtm do
 
   @doc """
   An utility method for displaying record information.
+  Field length can be specified as options, and its default is 32.
   """
-  def puts(data) do
-    Binary.Exrtm.puts(data)
+  def puts(data, options // [length: 32]) do
+    Binary.Exrtm.puts(data, options)
   end
 end
