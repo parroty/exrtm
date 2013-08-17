@@ -98,8 +98,11 @@ defmodule Exrtm.API.Tasks do
   end
 
   defmodule GetList do
-    def invoke(user) do
-      request  = Exrtm.API.create_request_param(user, [method: "rtm.tasks.getList"])
+    def invoke(user, filter) do
+      params = [method: "rtm.tasks.getList"]
+      if filter != "" do params = params ++ [filter: filter] end
+
+      request  = Exrtm.API.create_request_param(user, params)
       Exrtm.API.Tasks.Base.process_multiple_items(user, request)
     end
   end

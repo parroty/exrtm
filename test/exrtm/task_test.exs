@@ -32,6 +32,12 @@ defmodule Exrtm.TaskTest do
     assert(task.due          == "")
   end
 
+  @task_filter_verify [pre_condition: "rtm.tasks.getList", expected_match: "filter=status:completed"]
+  test_with_mock "get task list with custom filter", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url, @task_filter_verify) end] do
+    tasks = Exrtm.Task.get_list(@mock_user, "status:completed")
+    assert(Enum.count(tasks) == 2)
+  end
+
   test_with_mock "get task list with invalid token fails", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request_error(url) end] do
     assert_raise ExrtmError, fn ->
       Exrtm.Task.get_list(@mock_user)

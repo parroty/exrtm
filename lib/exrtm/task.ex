@@ -8,8 +8,8 @@ defmodule Exrtm.Task do
   @doc """
   Returns all the registered tasks.
   """
-  def get_list(user) do
-    Exrtm.API.Tasks.GetList.invoke(user)
+  def get_list(user, filter // "") do
+    Exrtm.API.Tasks.GetList.invoke(user, filter)
   end
 
   @doc """
