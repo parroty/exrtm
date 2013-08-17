@@ -32,7 +32,7 @@ defmodule Exrtm.TaskTest do
     assert(task.due          == "")
   end
 
-  @task_filter_verify [pre_condition: "rtm.tasks.getList", expected_match: "filter=status:completed"]
+  @task_filter_verify [pre_condition: "rtm.tasks.getList", expected_match: "filter=status%3Acompleted"]
   test_with_mock "get task list with custom filter", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url, @task_filter_verify) end] do
     tasks = Exrtm.Task.get_list(@mock_user, "status:completed")
     assert(Enum.count(tasks) == 2)
@@ -91,7 +91,7 @@ defmodule Exrtm.TaskTest do
     assert(result.completed == "")
   end
 
-  @add_tags_verify [pre_condition: "rtm.tasks.addTags", expected_match: "tags=coffee,good,mmm"]
+  @add_tags_verify [pre_condition: "rtm.tasks.addTags", expected_match: "tags=coffee%2Cgood%2Cmmm"]
   test_with_mock "add tags", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url, @add_tags_verify) end] do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.add_tags(@mock_user, task, "coffee,good,mmm")
@@ -128,7 +128,7 @@ defmodule Exrtm.TaskTest do
     assert(result.postponed == "1")
   end
 
-  @set_url_verify [pre_condition: "rtm.tasks.setURL", expected_match: "http://www.myfavoritecoffeeplace.com/"]
+  @set_url_verify [pre_condition: "rtm.tasks.setURL", expected_match: "www.myfavoritecoffeeplace.com"]
   test_with_mock "set url", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url, @set_url_verify) end] do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.set_url(@mock_user, task, "http://www.myfavoritecoffeeplace.com/")
@@ -152,7 +152,7 @@ defmodule Exrtm.TaskTest do
     assert(result.priority == "3")
   end
 
-  @set_due_date_verify [pre_condition: "rtm.tasks.setDueDate", expected_match: "due=2006-05-09T14:00:00Z"]
+  @set_due_date_verify [pre_condition: "rtm.tasks.setDueDate", expected_match: "due=2006-05-09T14%3A00%3A00Z"]
   test_with_mock "set due date", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url, @set_due_date_verify) end] do
     task   = Exrtm.Task.get_by_name(@mock_user, "Get Bananas")
     result = Exrtm.Task.set_due_date(@mock_user, task, "2006-05-09T14:00:00Z", "1")

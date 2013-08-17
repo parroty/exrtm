@@ -19,12 +19,12 @@ defmodule Exrtm.API do
   end
 
   def get_auth_url(user, permission, frob) do
-    params = [["api_key", user[:key]], ["perms", permission], ["frob", frob]]
+    params = [api_key: user[:key], perms: permission, frob: frob]
     @rtm_uri <> @auth_path <> do_make_url(user[:secret], params)
   end
 
   def do_request(user, request) do
-    url = @rtm_uri <> make_url(user[:secret], request)
+    url = @rtm_uri <> @rest_path <> do_make_url(user[:secret], request)
     response = Exrtm.Util.HTTP.get(url)
 
     stat = XmlNode.from_string(response)
@@ -42,22 +42,16 @@ defmodule Exrtm.API do
     [api_key: user[:key], auth_token: user[:token]] ++ params
   end
 
-  defp make_url(secret, request) do
-    params = Enum.map(Keyword.keys(request), fn(x) -> [atom_to_binary(x), request[x]] end)
-    @rest_path <> do_make_url(secret, params)
-  end
-
   defp do_make_url(secret, params) do
-    params_for_url = Enum.map(params, fn(x) -> Enum.join(x, "=") end)
-    params_in_str  = Enum.join(Enum.sort(params_for_url), "&")
-    signature      = sign(secret, params)
+    query_params = URI.encode_query(params)
+    signature    = sign(secret, params)
 
-    "?#{params_in_str}&api_sig=#{signature}"
+    "?#{query_params}&api_sig=#{signature}"
   end
 
   defp sign(secret, params) do
-    joined_key_values = Enum.map(params, fn(x) -> Enum.join(x, "") end)
-    joined_param_str  = Enum.join(Enum.sort(joined_key_values))
+    concatinated_params = Enum.map(Keyword.keys(params), fn(x) -> "#{atom_to_binary(x)}#{params[x]}" end)
+    joined_param_str    = Enum.join(Enum.sort(concatinated_params))
 
     Exrtm.Util.MD5.hexdigest("#{secret}#{joined_param_str}")
   end
