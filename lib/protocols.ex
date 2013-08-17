@@ -15,10 +15,9 @@ defimpl Binary.Exrtm, for: Exrtm.Record.Task do
 
   def remove_nil(list) do
     Enum.map(list, fn(item) ->
-      if item == nil do
-        ""
-      else
-        item
+      cond do
+        item == nil -> ""
+        true -> item
       end
     end)
   end
