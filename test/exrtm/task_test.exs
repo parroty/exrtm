@@ -51,11 +51,17 @@ defmodule Exrtm.TaskTest do
   end
 
   test_with_mock "add task", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
-    task = Exrtm.Task.add(@mock_user, "Get Bananas")
+    task = Exrtm.Task.add(@mock_user, "Bananas")
     assert(task.id        == "123456789")
     assert(task.series_id == "987654321")
-    assert(task.name      == "Get Bananas")
+    assert(task.name      == "Bananas")
     assert(task.list_id   == "876543210")
+  end
+
+  @task_add_space_verify [pre_condition: "rtm.tasks.add", expected_match: "name=Get+Bananas"]
+  test_with_mock "add task should encoded name parameter", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url, @task_add_space_verify) end] do
+    task = Exrtm.Task.add(@mock_user, "Get Bananas")
+    assert(task != nil)
   end
 
   test_with_mock "add task fails with invalid response", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request_error(url) end] do
