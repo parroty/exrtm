@@ -17,4 +17,12 @@ defmodule Exrtm do
   def puts(data, options // [length: 32]) do
     Binary.Exrtm.puts(data, options)
   end
+
+  @doc """
+  Provides general API call interface.
+  Call the API with the specified parameter and returns the XML response.
+  """
+  def call(user, params) do
+    Exrtm.API.Methods.invoke(user, params)
+  end
 end
