@@ -1,12 +1,5 @@
 alias Exrtm.Util.Xml.XmlNode
 
-defmodule Exrtm.User do
-  use ExActor, export: :singleton   # The actor process will be locally registered
-
-  defcall get, state: state, do: state
-  defcast set(x), do: new_state(x)
-end
-
 defmodule Exrtm.API do
   @moduledoc """
   Provides initial infrastractures to call remember the milk APIs.
