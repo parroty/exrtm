@@ -33,11 +33,7 @@ defmodule Exrtm.API do
     @rtm_uri <> @auth_path <> do_make_url(user[:secret], params)
   end
 
-  def do_request(user // nil, request) do
-    if user == nil do
-      user = Exrtm.User.get
-    end
-
+  def do_request(user, request) do
     url = @rtm_uri <> @rest_path <> do_make_url(user[:secret], request)
     response = Exrtm.Util.HTTP.get(url)
 
@@ -53,10 +49,6 @@ defmodule Exrtm.API do
   end
 
   def create_request_param(user // nil, params) do
-    if user == nil do
-      # user = Exrtm.User.get
-    end
-
     [api_key: user[:key], auth_token: user[:token]] ++ params
   end
 

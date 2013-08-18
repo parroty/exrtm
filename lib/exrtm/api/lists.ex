@@ -45,7 +45,7 @@ defmodule Exrtm.API.Lists do
   end
 
   defmodule GetList do
-    def invoke() do
+    def invoke do
       user = Exrtm.User.get
       request  = Exrtm.API.create_request_param(user, [method: "rtm.lists.getList"])
       Exrtm.API.Lists.Base.process_multiple_items(user, request)

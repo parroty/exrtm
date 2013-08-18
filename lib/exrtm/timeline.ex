@@ -6,7 +6,7 @@ defmodule Exrtm.Timeline do
   @doc """
   Creates a new timeline.
   """
-  def create() do
-    Exrtm.API.Timelines.Create.invoke()
+  def create do
+    Exrtm.API.Timelines.Create.invoke
   end
 end
