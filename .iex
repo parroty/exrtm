@@ -1,4 +1,7 @@
 defmodule IEXUtil do
+  @doc """
+  Check if the method is loaded and can be called.
+  """
   def load_check(key, secret, token) do
     try do
       Exrtm.Auth.init_api(key, secret, token)
@@ -15,6 +18,9 @@ token  = :os.getenv("RTM_TOKEN")          # use pre-stored token to authenticate
 
 if IEXUtil.load_check(key, secret, token) == true do
   user = Exrtm.Auth.init_api(key, secret, token)
+  task = Exrtm.Task
+  list = Exrtm.List
+  io   = Exrtm
 else
   IO.puts "[Warning] tried to load Exrtm library, but failed.\n"
 end
