@@ -56,20 +56,33 @@ $ export RTM_SHARED_SECRET="your shared secret"
 $ export RTM_TOKEN="pre-acquired authentication token"
 ```
 
-Then run the "run_iex.sh". It loads up ".iex" and load related libraries based on environment variables.
+Then run the "run_iex.sh". It loads up ".iex" and related libraries based on the environment variables.
+It has pre-defined helper variables (auth, user, task, list, io) for API operations.
 
 ```
 $ ./run_iex.sh
 iex(1)> user
 [key: 'xxxx', secret: 'yyyy', token: 'zzzz']
 
-iex(2)> user |> Exrtm.Task.get_list |> Exrtm.puts
-completed task 1
-RTMAPITEST
-repeat1
-test2
-:ok
-iex(3)>
+iex(2)> auth.get_frob(user)
+"xxxxxxxxxxxxxxxxxx"
+
+iex(3)> task.get_list |> io.puts
+task1
+task2
+task3
+task4
+
+iex(4)> test5 = task.add("test5")
+Exrtm.Record.Task[id: "xxx", series_id: "xxx", name: "test5",
+ tags: "", modified: "2013-08-18T13:23:39Z", participants: nil, url: "",
+ created: "2013-08-18T13:23:39Z", source: "api", rrule: nil,
+ list_id: "xxx", completed: "", added: "2013-08-18T13:23:39Z",
+ postponed: "0", priority: "N", deleted: "", has_due_time: "0", estimate: "",
+ due: ""]
+
+iex(5)> task.delete(test5) |> io.puts
+test5
 ```
 
 ## Usage
