@@ -13,6 +13,7 @@ defmodule Exrtm.Mixfile do
 
   # Configuration for the OTP application
   def application do
+#   [mod: {Exrtm, []}]
     []
   end
 
@@ -21,7 +22,8 @@ defmodule Exrtm.Mixfile do
   defp deps do
     [
       { :mock, ">= 0.0.3", [github: "jjh42/mock"] },
-      { :ex_doc, github: "elixir-lang/ex_doc" }
+      { :ex_doc, github: "elixir-lang/ex_doc" },
+      { :exactor, github: "sasa1977/exactor"}
     ]
   end
 end

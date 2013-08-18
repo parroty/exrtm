@@ -45,25 +45,28 @@ defmodule Exrtm.API.Lists do
   end
 
   defmodule GetList do
-    def invoke(user) do
+    def invoke() do
+      user = Exrtm.User.get
       request  = Exrtm.API.create_request_param(user, [method: "rtm.lists.getList"])
       Exrtm.API.Lists.Base.process_multiple_items(user, request)
     end
   end
 
   defmodule Add do
-    def invoke(user, name) do
-      timeline = Exrtm.Timeline.create(user)
+    def invoke(name) do
+      user = Exrtm.User.get
+      timeline = Exrtm.Timeline.create
       request  = Exrtm.API.create_request_param(user, [method: "rtm.lists.add", name: name, timeline: timeline])
       Exrtm.API.Lists.Base.process_single_item(user, request)
     end
   end
 
   defmodule Delete do
-    def invoke(user, list) do
+    def invoke(list) do
       if list == nil do raise ExrtmError.new(message: "specified list is invalid.") end
 
-      timeline = Exrtm.Timeline.create(user)
+      user = Exrtm.User.get
+      timeline = Exrtm.Timeline.create
       request  = Exrtm.API.create_request_param(user, [method: "rtm.lists.delete", list_id: list.id, timeline: timeline])
       Exrtm.API.Lists.Base.process_single_item(user, request)
     end

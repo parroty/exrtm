@@ -17,7 +17,8 @@ secret = :os.getenv("RTM_SHARED_SECRET")  # your shared secret of remember the m
 token  = :os.getenv("RTM_TOKEN")          # use pre-stored token to authenticate
 
 if IEXUtil.load_check(key, secret, token) == true do
-  user = Exrtm.Auth.init_api(key, secret, token)
+  auth = Exrtm.Auth
+  user = auth.init_api(key, secret, token)
   task = Exrtm.Task
   list = Exrtm.List
   io   = Exrtm

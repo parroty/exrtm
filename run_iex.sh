@@ -1,1 +1,2 @@
-iex -r "lib/**/*.ex"
+iex -S mix
+

@@ -1,5 +1,12 @@
 alias Exrtm.Util.Xml.XmlNode
 
+defmodule Exrtm.User do
+  use ExActor, export: :singleton   # The actor process will be locally registered
+
+  defcall get, state: state, do: state
+  defcast set(x), do: new_state(x)
+end
+
 defmodule Exrtm.API do
   @moduledoc """
   Provides initial infrastractures to call remember the milk APIs.
@@ -11,7 +18,10 @@ defmodule Exrtm.API do
   @perms     ["read", "write", "delete"]
 
   def init_api(key, secret, token) do
-    [key: key, secret: secret, token: token]
+    user = [key: key, secret: secret, token: token]
+    Exrtm.User.start
+    Exrtm.User.set(user)
+    user
   end
 
   def initialize(user, method) do
@@ -23,7 +33,11 @@ defmodule Exrtm.API do
     @rtm_uri <> @auth_path <> do_make_url(user[:secret], params)
   end
 
-  def do_request(user, request) do
+  def do_request(user // nil, request) do
+    if user == nil do
+      user = Exrtm.User.get
+    end
+
     url = @rtm_uri <> @rest_path <> do_make_url(user[:secret], request)
     response = Exrtm.Util.HTTP.get(url)
 
@@ -38,7 +52,11 @@ defmodule Exrtm.API do
     end
   end
 
-  def create_request_param(user, params) do
+  def create_request_param(user // nil, params) do
+    if user == nil do
+      # user = Exrtm.User.get
+    end
+
     [api_key: user[:key], auth_token: user[:token]] ++ params
   end
 

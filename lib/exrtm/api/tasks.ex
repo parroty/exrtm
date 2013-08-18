@@ -86,10 +86,11 @@ defmodule Exrtm.API.Tasks do
     Provides basic processing for a certain task operation
     """
 
-    def invoke(user, task, method, options // []) do
+    def invoke(task, method, options // []) do
       if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
 
-      timeline = Exrtm.Timeline.create(user)
+      user = Exrtm.User.get
+      timeline = Exrtm.Timeline.create()
       request  = Exrtm.API.create_request_param(user,
                   [method: method, timeline: timeline, list_id: task.list_id,
                    taskseries_id: task.series_id, task_id: task.id])
@@ -98,93 +99,95 @@ defmodule Exrtm.API.Tasks do
   end
 
   defmodule GetList do
-    def invoke(user, filter) do
+    def invoke(filter) do
       params = [method: "rtm.tasks.getList"]
       if filter != "" do params = params ++ [filter: filter] end
 
-      request  = Exrtm.API.create_request_param(user, params)
+      user = Exrtm.User.get
+      request = Exrtm.API.create_request_param(user, params)
       Exrtm.API.Tasks.Base.process_multiple_items(user, request)
     end
   end
 
   defmodule Add do
-    def invoke(user, name) do
-      timeline = Exrtm.Timeline.create(user)
+    def invoke(name) do
+      user = Exrtm.User.get
+      timeline = Exrtm.Timeline.create
       request  = Exrtm.API.create_request_param(user, [method: "rtm.tasks.add", name: name, timeline: timeline])
       Exrtm.API.Tasks.Base.process_single_item(user, request)
     end
   end
 
   defmodule Delete do
-    def invoke(user, task) do
-      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.delete")
+    def invoke(task) do
+      Exrtm.API.Tasks.Operations.invoke(task, "rtm.tasks.delete")
     end
   end
 
   defmodule Complete do
-    def invoke(user, task) do
-      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.complete")
+    def invoke(task) do
+      Exrtm.API.Tasks.Operations.invoke(task, "rtm.tasks.complete")
     end
   end
 
   defmodule Uncomplete do
-    def invoke(user, task) do
-      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.uncomplete")
+    def invoke(task) do
+      Exrtm.API.Tasks.Operations.invoke(task, "rtm.tasks.uncomplete")
     end
   end
 
   defmodule AddTags do
-    def invoke(user, task, tags) do
-      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.addTags", [tags: tags])
+    def invoke(task, tags) do
+      Exrtm.API.Tasks.Operations.invoke(task, "rtm.tasks.addTags", [tags: tags])
     end
   end
 
   defmodule RemoveTags do
-    def invoke(user, task, tags) do
-      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.removeTags", [tags: tags])
+    def invoke(task, tags) do
+      Exrtm.API.Tasks.Operations.invoke(task, "rtm.tasks.removeTags", [tags: tags])
     end
   end
 
   defmodule SetPriority do
-    def invoke(user, task, priority) do
-      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.setPriority", [priority: priority])
+    def invoke(task, priority) do
+      Exrtm.API.Tasks.Operations.invoke(task, "rtm.tasks.setPriority", [priority: priority])
     end
   end
 
   defmodule SetName do
-    def invoke(user, task, name) do
-      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.setName", [name: name])
+    def invoke(task, name) do
+      Exrtm.API.Tasks.Operations.invoke(task, "rtm.tasks.setName", [name: name])
     end
   end
 
   defmodule Postpone do
-    def invoke(user, task) do
-      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.postpone")
+    def invoke(task) do
+      Exrtm.API.Tasks.Operations.invoke(task, "rtm.tasks.postpone")
     end
   end
 
   defmodule SetURL do
-    def invoke(user, task, url) do
-      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.setURL", [url: url])
+    def invoke(task, url) do
+      Exrtm.API.Tasks.Operations.invoke(task, "rtm.tasks.setURL", [url: url])
     end
   end
 
   defmodule SetRecurrence do
-    def invoke(user, task, recurrence) do
-      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.setRecurrence", [repeat: recurrence])
+    def invoke(task, recurrence) do
+      Exrtm.API.Tasks.Operations.invoke(task, "rtm.tasks.setRecurrence", [repeat: recurrence])
     end
   end
 
   defmodule MovePriority do
-    def invoke(user, task, direction) do
-      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.movePriority", [direction: direction])
+    def invoke(task, direction) do
+      Exrtm.API.Tasks.Operations.invoke(task, "rtm.tasks.movePriority", [direction: direction])
     end
   end
 
   defmodule SetDueDate do
-    def invoke(user, task, due, has_due_time, parse) do
-      Exrtm.API.Tasks.Operations.invoke(user, task, "rtm.tasks.setDueDate",
-                                          [due: due, has_due_time: has_due_time, parse: parse])
+    def invoke(task, due, has_due_time, parse) do
+      Exrtm.API.Tasks.Operations.invoke(task, "rtm.tasks.setDueDate",
+                                        [due: due, has_due_time: has_due_time, parse: parse])
     end
   end
 end

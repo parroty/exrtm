@@ -1,7 +1,8 @@
 alias Exrtm.Util.Xml.XmlNode
 
 defmodule Exrtm.API.Timelines.Create do
-  def invoke(user) do
+  def invoke() do
+    user = Exrtm.User.get
     request  = [method: "rtm.timelines.create", api_key: user[:key], auth_token: user[:token]]
     response = Exrtm.API.do_request(user, request)
     parse_result(response)

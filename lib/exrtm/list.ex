@@ -8,29 +8,29 @@ defmodule Exrtm.List do
   @doc """
   Returns all the registered lists.
   """
-  def get_list(user) do
-    Exrtm.API.Lists.GetList.invoke(user)
+  def get_list do
+    Exrtm.API.Lists.GetList.invoke
   end
 
   @doc """
   Returns a list that maches the specified name.
   """
-  def get_by_name(user, name) do
-    lists = get_list(user)
+  def get_by_name(name) do
+    lists = get_list
     Enum.find(lists, fn(e) -> e.name == name end)
   end
 
   @doc """
   Creates a new list with the specified name.
   """
-  def add(user, name) do
-    Exrtm.API.Lists.Add.invoke(user, name)
+  def add(name) do
+    Exrtm.API.Lists.Add.invoke(name)
   end
 
   @doc """
   Deletes a specified list object.
   """
-  def delete(user, list) do
-    Exrtm.API.Lists.Delete.invoke(user, list)
+  def delete(list) do
+    Exrtm.API.Lists.Delete.invoke(list)
   end
 end
