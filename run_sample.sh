@@ -1,1 +1,1 @@
-elixir -r "lib/**/*.ex" sample.ex $@
+mix run sample.ex $@
