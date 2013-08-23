@@ -47,7 +47,7 @@ defmodule Exrtm.Util.Xml do
     end
 
     defp to_unicode_binary(list) when is_list(list), do: :unicode.characters_to_binary(list)
-    defp to_unicode_binary(any), do: to_binary(any)
+    defp to_unicode_binary(any), do: to_string(any)
 
     defp to_unicode_char_list(input) do
       input

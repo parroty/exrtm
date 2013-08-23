@@ -20,7 +20,7 @@ defmodule Exrtm.Record do
     chars  = Enum.map(keys, fn(key) -> "  #{key} = #{get_value(values, key)}" end)
 
     # (ex.) use "Task" as name for "Exrtm.Record.Task".
-    original_name = to_binary(type.__record__(:name))
+    original_name = to_string(type.__record__(:name))
     display_name  = String.split(original_name, ".") |> Enum.reverse |> Enum.first
 
     "[#{display_name}]\n" <> Enum.join(chars, "\n")
@@ -34,15 +34,14 @@ defmodule Exrtm.Record do
   defp do_get_value(value) when is_list(value) do "[#{Enum.count(value)} items]" end
   defp do_get_value(value)                     do value end
 
-
-  defimpl Binary.Chars, for: List do
-    def to_binary(list) do
+  defimpl String.Chars, for: List do
+    def to_string(list) do
       Exrtm.Record.stringify_object(list, List)
     end
   end
 
-  defimpl Binary.Chars, for: Task do
-    def to_binary(task) do
+  defimpl String.Chars, for: Task do
+    def to_string(task) do
       Exrtm.Record.stringify_object(task, Task)
     end
   end
