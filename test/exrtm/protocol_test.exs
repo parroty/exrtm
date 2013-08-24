@@ -32,6 +32,13 @@ defmodule Exrtm.ProtocolTest do
     end) == format("test_task", 64) <> "\n"
   end
 
+  test "Exrtm.puts for Task with tag-name" do
+    task = Task.new(id: 2, name: "test_task", tags: "tag")
+    assert capture_io(fn ->
+      Exrtm.puts(task)
+    end) == format("test_task(tag)", 32) <> "\n"
+  end
+
   test "Exrtm.puts for Task list" do
     task1 = Task.new(id: 2, name: "test_task1")
     task2 = Task.new(id: 3, name: "test_task2")

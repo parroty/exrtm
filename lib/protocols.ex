@@ -13,7 +13,14 @@ defimpl Binary.Exrtm, for: Exrtm.Record.Task do
 
   def puts(data, options) do
     length = options[:length]
-    printf("%-#{length}s%s\n", [data.name || "", data.due || ""])
+    name   = data.name || ""
+    tags   = if empty?(data.tags), do: "", else: "(#{data.tags})"
+
+    printf("%-#{length}s%s\n", [name <> tags, data.due || ""])
+  end
+
+  defp empty?(value) do
+    value == nil || value == ""
   end
 end
 
