@@ -9,17 +9,11 @@ defimpl Binary.Exrtm, for: List do
 end
 
 defimpl Binary.Exrtm, for: Exrtm.Record.Task do
-  def puts(data, options) do
-    IO.puts Enum.join(:io_lib.format("~-#{options[:length]}s~s", remove_nil([data.name, data.due])), "")
-  end
+  import ExPrintf
 
-  def remove_nil(list) do
-    Enum.map(list, fn(item) ->
-      cond do
-        item == nil -> ""
-        true -> item
-      end
-    end)
+  def puts(data, options) do
+    length = options[:length]
+    printf("%-#{length}s%s\n", [data.name || "", data.due || ""])
   end
 end
 

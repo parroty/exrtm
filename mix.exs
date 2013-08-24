@@ -23,7 +23,8 @@ defmodule Exrtm.Mixfile do
     [
       { :mock, ">= 0.0.3", [github: "jjh42/mock"] },
       { :ex_doc, github: "elixir-lang/ex_doc" },
-      { :exactor, github: "sasa1977/exactor"}
+      { :exactor, github: "sasa1977/exactor"},
+      { :exprintf, github: "parroty/exprintf"}
     ]
   end
 end
