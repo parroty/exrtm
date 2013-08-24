@@ -8,7 +8,7 @@ defmodule Exrtm.Task do
   @doc """
   Returns all the registered tasks.
   """
-  def get_list(filter // "") do
+  def get_list(filter // "status:incomplete") do
     Exrtm.API.Tasks.GetList.invoke(filter)
   end
 
