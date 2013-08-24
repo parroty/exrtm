@@ -19,6 +19,13 @@ defmodule Exrtm do
   end
 
   @doc """
+  An utility method for displaying record information with detail.
+  """
+  def puts_detail(data, options // []) do
+    Binary.Exrtm.puts_detail(data, options)
+  end
+
+  @doc """
   Provides general API call interface.
   Call the API with the specified parameter and returns the XML response.
   """

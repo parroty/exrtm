@@ -15,13 +15,11 @@ defmodule Exrtm.RecordTest do
         "  archived = nil\n" <>
         "  position = nil\n" <>
         "  smart = nil\n" <>
-        "  sort_order = nil\n"
+        "  sort_order = nil"
 
   test "IO.puts for List" do
     list = List.new(id: 1, name: "test_list")
-    assert capture_io(fn ->
-      IO.puts list
-    end) == @list
+    assert Exrtm.Record.stringify_object(list, List) == @list
   end
 
   @task "[Task]\n" <>
@@ -43,13 +41,11 @@ defmodule Exrtm.RecordTest do
         "  deleted = nil\n" <>
         "  has_due_time = nil\n" <>
         "  estimate = nil\n" <>
-        "  due = nil\n"
+        "  due = nil"
 
   test "IO.puts for Task" do
     task = Task.new(id: 2, series_id: 3, name: "test_task")
-    assert capture_io(fn ->
-      IO.puts task
-    end) == @task
+    assert Exrtm.Record.stringify_object(task, Task) == @task
   end
 end
 

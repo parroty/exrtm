@@ -33,17 +33,5 @@ defmodule Exrtm.Record do
   defp do_get_value(value) when value == nil   do "nil" end
   defp do_get_value(value) when is_list(value) do "[#{Enum.count(value)} items]" end
   defp do_get_value(value)                     do value end
-
-  defimpl String.Chars, for: List do
-    def to_string(list) do
-      Exrtm.Record.stringify_object(list, List)
-    end
-  end
-
-  defimpl String.Chars, for: Task do
-    def to_string(task) do
-      Exrtm.Record.stringify_object(task, Task)
-    end
-  end
 end
 
