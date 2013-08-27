@@ -2,7 +2,6 @@ Code.require_file "../test_helper.exs", __DIR__
 
 defmodule Exrtm.RecordTest do
   use ExUnit.Case
-  import ExUnit.CaptureIO
 
   alias Exrtm.Record.List
   alias Exrtm.Record.Task
