@@ -1,4 +1,4 @@
-Exrtm [![Build Status](https://secure.travis-ci.org/parroty/exrtm.png?branch=master "Build Status")](http://travis-ci.org/parroty/exrtm)
+Exrtm [![Build Status](https://secure.travis-ci.org/parroty/exrtm.png?branch=master "Build Status")](http://travis-ci.org/parroty/exrtm) [![Coverage Status](https://coveralls.io/repos/parroty/exrtm/badge.png?branch=master)](https://coveralls.io/r/parroty/exrtm?branch=master)
 ============
 An library for accessing remember the milk API implemented using Elixir.
 
