@@ -8,7 +8,9 @@ defmodule Exrtm.Mixfile do
       name: "Exrtm",
       source_url: "https://github.com/parroty/exrtm",
       homepage_url: "https://github.com/parroty/exrtm",
-      deps: deps ]
+      deps: deps,
+      test_coverage: [tool: ExCoveralls]
+    ]
   end
 
   # Configuration for the OTP application
