@@ -23,7 +23,7 @@ defmodule Exrtm.Mixfile do
   # { :foobar, "0.1", git: "https://github.com/elixir-lang/foobar.git" }
   defp deps do
     [
-      {:mock, ">= 0.0.3", github: "parroty/mock"},
+      {:mock, ">= 0.0.3", github: "parroty/mock", branch: "version"},
       {:ex_doc, github: "elixir-lang/ex_doc"},
       {:exactor, github: "sasa1977/exactor"},
       {:exprintf, github: "parroty/exprintf"},
