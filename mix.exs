@@ -4,7 +4,7 @@ defmodule Exrtm.Mixfile do
   def project do
     [ app: :exrtm,
       version: "0.0.1",
-      elixir: "~> 0.10.0",
+      elixir: ">= 0.10.0",
       name: "Exrtm",
       source_url: "https://github.com/parroty/exrtm",
       homepage_url: "https://github.com/parroty/exrtm",
