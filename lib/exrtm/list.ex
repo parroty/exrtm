@@ -1,5 +1,3 @@
-alias Exrtm.Util.Xml.XmlNode
-
 defmodule Exrtm.List do
   @moduledoc """
   Provides 'list' related functionalities.

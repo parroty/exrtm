@@ -1,5 +1,3 @@
-alias Exrtm.Util.Xml.XmlNode
-
 defmodule Exrtm.Task do
   @moduledoc """
   Provides 'task' related functionalities.
