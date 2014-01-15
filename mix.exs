@@ -24,7 +24,6 @@ defmodule Exrtm.Mixfile do
   defp deps do
     [
       {:mock, ">= 0.0.3", github: "parroty/mock", branch: "version"},
-      {:ex_doc, github: "elixir-lang/ex_doc"},
       {:exactor, github: "sasa1977/exactor"},
       {:exprintf, github: "parroty/exprintf"},
       {:excoveralls, github: "parroty/excoveralls"}

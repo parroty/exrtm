@@ -14,7 +14,7 @@ defmodule Exrtm.ListTest do
   test_with_mock "get_list", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     response  = Exrtm.List.get_list
     assert(Enum.count(response) == 7)
-    assert(Enum.first(response).name == "Inbox")
+    assert(Enum.at(response, 0).name == "Inbox")
   end
 
   test_with_mock "get_by_name", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do

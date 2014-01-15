@@ -21,7 +21,7 @@ defmodule Exrtm.Record do
 
     # (ex.) use "Task" as name for "Exrtm.Record.Task".
     original_name = to_string(type.__record__(:name))
-    display_name  = String.split(original_name, ".") |> Enum.reverse |> Enum.first
+    display_name  = String.split(original_name, ".") |> Enum.reverse |> Enum.at(0)
 
     "[#{display_name}]\n" <> Enum.join(chars, "\n")
   end

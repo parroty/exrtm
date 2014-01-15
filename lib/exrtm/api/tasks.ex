@@ -18,7 +18,7 @@ defmodule Exrtm.API.Tasks do
       tasks = parse_list(list)
       count = Enum.count(tasks)
       if count > 1 do raise ExrtmError.new(message: "expected single task, but #{count} tasks returned.") end
-      Enum.first(tasks)
+      Enum.at(tasks, 0)
     end
 
     @doc """

@@ -60,7 +60,7 @@ defmodule Exrtm.Mock do
     if Enum.count(not_nil_matches) == 0 do
       raise "mock pattern specified in the test was not found."
     else
-      item = Enum.first(not_nil_matches)
+      item = Enum.at(not_nil_matches, 0)
       if item[:response_file] do
         read_file(item[:response_file])
       else

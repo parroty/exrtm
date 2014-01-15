@@ -15,7 +15,7 @@ defmodule Exrtm.TaskTest do
     tasks = Exrtm.Task.get_list
     assert(Enum.count(tasks) == 2)
 
-    task = Enum.first(tasks)
+    task = Enum.at(tasks, 0)
     assert(task.series_id    == "123456789")
     assert(task.name         == "Get Bananas")
     assert(task.modified     == "2006-05-07T10:19:54Z")
