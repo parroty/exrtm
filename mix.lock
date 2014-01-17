@@ -1,6 +1,6 @@
 [ "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "a9eaade0ab8f17e17c894b6eadda10656585e378", []},
-  "exactor": {:git, "git://github.com/sasa1977/exactor.git", "91029ecf3c0e3a58cf2002f0c7b67244536fccc7", []},
-  "excoveralls": {:git, "git://github.com/parroty/excoveralls.git", "cb860b34721a3fea2c08ca0b267451c3c886c652", []},
+  "exactor": {:git, "git://github.com/sasa1977/exactor.git", "76b8f919a2318e3d800dfb56ad700cd411e31c30", []},
+  "excoveralls": {:git, "git://github.com/parroty/excoveralls.git", "bff3a01679e27f43380138c3f52f30e74426bdf8", []},
   "exprintf": {:git, "git://github.com/parroty/exprintf.git", "ef4d3dc220ba23f6eb3544705c949d49bc24f5bc", []},
   "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "c9df36f07b2089a73ab6b32074c01728f1e5a2e1", []},
   "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "e50af6e109cb03bd26acf715cbc77de746507d1d", [tag: "v1.4.3"]},
