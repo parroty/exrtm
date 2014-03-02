@@ -8,7 +8,7 @@ defmodule Exrtm.Auth do
   if token is not available yet, use 'get\\_auth\\_url' and 'get_frob' methods to get the token.
   The acquired token can be reused later, by skipping frob authentication.
   """
-  def init_api(key, secret, token // nil) do
+  def init_api(key, secret, token \\ nil) do
     Exrtm.API.init_api(key, secret, token)
   end
 

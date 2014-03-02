@@ -6,7 +6,7 @@ defmodule Exrtm.Task do
   @doc """
   Returns all the registered tasks.
   """
-  def get_list(filter // "status:incomplete") do
+  def get_list(filter \\ "status:incomplete") do
     Exrtm.API.Tasks.GetList.invoke(filter)
   end
 
@@ -110,7 +110,7 @@ defmodule Exrtm.Task do
   If due has time along with date, specify '1' for 'has_due_time'.
   If parse date needs to be skipped, specify '0' for 'parse'.
   """
-  def set_due_date(task, due, has_due_time // "0", parse // "1") do
+  def set_due_date(task, due, has_due_time \\ "0", parse \\ "1") do
     Exrtm.API.Tasks.SetDueDate.invoke(task, due, has_due_time, parse)
   end
 end

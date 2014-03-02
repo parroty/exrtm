@@ -41,7 +41,7 @@ defmodule Exrtm.API do
     end
   end
 
-  def create_request_param(user // nil, params) do
+  def create_request_param(user \\ nil, params) do
     [api_key: user[:key], auth_token: user[:token]] ++ params
   end
 

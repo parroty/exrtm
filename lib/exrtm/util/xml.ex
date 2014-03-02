@@ -7,7 +7,7 @@ defmodule Exrtm.Util.Xml do
   defrecord :xmlText, Record.extract(:xmlText, from_lib: "xmerl/include/xmerl.hrl")
 
   defrecord XmlNode, element: nil do
-    def from_string(xml_string, options // [quiet: true]) do
+    def from_string(xml_string, options \\ [quiet: true]) do
       {doc, []} =
         xml_string
         |> to_unicode_char_list

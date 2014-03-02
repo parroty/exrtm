@@ -32,11 +32,11 @@ defmodule Exrtm.Mock do
     [url: %r/.*rtm.tasks.getList&.*/, response_file: "test/fixtures/rtm.tasks.getList.invalid" ]
   ]
 
-  def request(url, assertion // nil) do
+  def request(url, assertion \\ nil) do
     do_request([@default_patterns], url, assertion)
   end
 
-  def request_error(url, assertion // nil) do
+  def request_error(url, assertion \\ nil) do
     do_request([@error_patterns, @default_patterns], url, assertion)
   end
 

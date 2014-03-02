@@ -86,7 +86,7 @@ defmodule Exrtm.API.Tasks do
     Provides basic processing for a certain task operation
     """
 
-    def invoke(task, method, options // []) do
+    def invoke(task, method, options \\ []) do
       if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
 
       user = Exrtm.User.get
