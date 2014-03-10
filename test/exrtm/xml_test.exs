@@ -5,7 +5,7 @@ defmodule Exrtm.XmlTest do
   alias Exrtm.Util.Xml.XmlNode
 
   setup do
-    doc = XmlNode.from_string(%s(
+    doc = XmlNode.from_string(~s(
       <root>
         <child id="1">NodeA</child>
         <child id="2">NodeB</child>

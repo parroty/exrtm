@@ -11,7 +11,7 @@ defmodule Exrtm.AuthTest do
 
   test "get_auth_url" do
     url = Exrtm.Auth.get_auth_url(@mock_user, "delete", "frob")
-    assert(Regex.match?(%r/.+rememberthemilk.+api_key.+/, url))
+    assert(Regex.match?(~r/.+rememberthemilk.+api_key.+/, url))
   end
 
   test_with_mock "get_frob", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do

@@ -12,6 +12,6 @@ defmodule Exrtm.MethodTest do
 
   test_with_mock "execute tasks.getList with general method call", Exrtm.Util.HTTP, [get: fn(url) -> Exrtm.Mock.request(url) end] do
     response = Exrtm.call(@mock_user, [method: "rtm.tasks.getList", api_key: @mock_user[:key]])
-    assert(response =~ %r/list id="876543210/)
+    assert(response =~ ~r/list id="876543210/)
   end
 end
