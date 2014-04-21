@@ -3,6 +3,8 @@ defmodule Exrtm.Util.Xml do
   Provides XML parsing functionalities.
   """
 
+  require Record
+
   defrecord :xmlAttribute, Record.extract(:xmlAttribute, from_lib: "xmerl/include/xmerl.hrl")
   defrecord :xmlText, Record.extract(:xmlText, from_lib: "xmerl/include/xmerl.hrl")
 
