@@ -7,43 +7,43 @@ defmodule Exrtm.RecordTest do
   alias Exrtm.Record.Task
 
   @list "[List]\n" <>
-        "  id = 1\n" <>
-        "  name = test_list\n" <>
-        "  deleted = nil\n" <>
-        "  locked = nil\n" <>
         "  archived = nil\n" <>
+        "  deleted = nil\n" <>
+        "  id = 1\n" <>
+        "  locked = nil\n" <>
+        "  name = test_list\n" <>
         "  position = nil\n" <>
         "  smart = nil\n" <>
         "  sort_order = nil"
 
   test "IO.puts for List" do
-    list = List.new(id: 1, name: "test_list")
+    list = %List{id: 1, name: "test_list"}
     assert Exrtm.Record.stringify_object(list, List) == @list
   end
 
   @task "[Task]\n" <>
-        "  id = 2\n" <>
-        "  series_id = 3\n" <>
-        "  name = test_task\n" <>
-        "  tags = nil\n" <>
-        "  modified = nil\n" <>
-        "  participants = nil\n" <>
-        "  url = nil\n" <>
-        "  created = nil\n" <>
-        "  source = nil\n" <>
-        "  rrule = nil\n" <>
-        "  list_id = nil\n" <>
-        "  completed = nil\n" <>
         "  added = nil\n" <>
+        "  completed = nil\n" <>
+        "  created = nil\n" <>
+        "  deleted = nil\n" <>
+        "  due = nil\n" <>
+        "  estimate = nil\n" <>
+        "  has_due_time = nil\n" <>
+        "  id = 2\n" <>
+        "  list_id = nil\n" <>
+        "  modified = nil\n" <>
+        "  name = test_task\n" <>
+        "  participants = nil\n" <>
         "  postponed = nil\n" <>
         "  priority = nil\n" <>
-        "  deleted = nil\n" <>
-        "  has_due_time = nil\n" <>
-        "  estimate = nil\n" <>
-        "  due = nil"
+        "  rrule = nil\n" <>
+        "  series_id = 3\n" <>
+        "  source = nil\n" <>
+        "  tags = nil\n" <>
+        "  url = nil"
 
   test "IO.puts for Task" do
-    task = Task.new(id: 2, series_id: 3, name: "test_task")
+    task = %Task{id: 2, series_id: 3, name: "test_task"}
     assert Exrtm.Record.stringify_object(task, Task) == @task
   end
 end

@@ -8,9 +8,9 @@ defmodule Exrtm.Util.HTTP do
 
     if result == :ok do
       {_status, _headers, content} = response
-      iolist_to_binary(content)
+      iodata_to_binary(content)
     else
-      raise ExrtmError.new(message: "http request failed - [url] " <> url)
+      raise %ExrtmError{message: "http request failed - [url] " <> url}
     end
   end
 end

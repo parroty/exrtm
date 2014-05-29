@@ -23,7 +23,7 @@ defmodule Exrtm.Util.Xml do
     defmacrop empty_node, do: __MODULE__[element: nil]
 
     def all(node, path) do
-      lc child_element inlist xpath(node, path) do
+      for child_element <- xpath(node, path) do
         from_element(child_element)
       end
     end

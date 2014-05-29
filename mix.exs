@@ -3,8 +3,8 @@ defmodule Exrtm.Mixfile do
 
   def project do
     [ app: :exrtm,
-      version: "0.0.1",
-      elixir: ">= 0.10.0",
+      version: "0.1.0",
+      elixir: "~> 0.13.3",
       name: "Exrtm",
       source_url: "https://github.com/parroty/exrtm",
       homepage_url: "https://github.com/parroty/exrtm",
@@ -23,10 +23,11 @@ defmodule Exrtm.Mixfile do
   # { :foobar, "0.1", git: "https://github.com/elixir-lang/foobar.git" }
   defp deps do
     [
+      {:meck, github: "eproxus/meck", tag: "0.8.2"},
       {:mock, ">= 0.0.3", github: "parroty/mock", branch: "version"},
       {:exactor, github: "sasa1977/exactor"},
-      {:exprintf, github: "parroty/exprintf"},
-      {:excoveralls, github: "parroty/excoveralls"}
+      {:exprintf, "0.1.0"},
+      {:excoveralls, "0.2.1"}
     ]
   end
 end

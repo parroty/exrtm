@@ -31,7 +31,7 @@ defmodule Exrtm.API.Lists do
     end
 
     defp parse(element) do
-      List.new(
+      %List{
         id:         element |> XmlNode.attr("id"),
         name:       element |> XmlNode.attr("name"),
         deleted:    element |> XmlNode.attr("deleted"),
@@ -40,7 +40,7 @@ defmodule Exrtm.API.Lists do
         position:   element |> XmlNode.attr("position"),
         smart:      element |> XmlNode.attr("smart"),
         sort_order: element |> XmlNode.attr("sort_order")
-      )
+      }
     end
   end
 
@@ -63,7 +63,7 @@ defmodule Exrtm.API.Lists do
 
   defmodule Delete do
     def invoke(list) do
-      if list == nil do raise ExrtmError.new(message: "specified list is invalid.") end
+      if list == nil do raise %ExrtmError{message: "specified list is invalid."} end
 
       user = Exrtm.User.get
       timeline = Exrtm.Timeline.create

@@ -35,7 +35,7 @@ defmodule Exrtm.API do
             |> XmlNode.attr("stat")
 
     if stat == "fail" do
-      raise ExrtmError.new(message: "Error returned from the server. [response] " <> response)
+      raise %ExrtmError{message: "Error returned from the server. [response] " <> response}
     else
       response
     end

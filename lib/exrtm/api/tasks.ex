@@ -17,7 +17,7 @@ defmodule Exrtm.API.Tasks do
 
       tasks = parse_list(list)
       count = Enum.count(tasks)
-      if count > 1 do raise ExrtmError.new(message: "expected single task, but #{count} tasks returned.") end
+      if count > 1 do raise %ExrtmError{message: "expected single task, but #{count} tasks returned."} end
       Enum.at(tasks, 0)
     end
 
@@ -40,21 +40,21 @@ defmodule Exrtm.API.Tasks do
     end
 
     defp parse_taskseries(element, list_id) do
-      taskseries = [
-        series_id:     element |> XmlNode.attr("id"),
-        name:          element |> XmlNode.attr("name"),
-        modified:      element |> XmlNode.attr("modified"),
-        tags:          element |> XmlNode.first("tags") |> parse_tags,
-        participants:  element |> XmlNode.first("participants") |> XmlNode.text,
-        url:           element |> XmlNode.attr("url"),
-        created:       element |> XmlNode.attr("created"),
-        source:        element |> XmlNode.attr("source"),
-        rrule:         element |> XmlNode.first("rrule") |> XmlNode.text,
-        list_id:       list_id
-      ]
-
       tasks = parse_tasks(element |> XmlNode.all("task"))
-      Enum.map(tasks, fn(task) -> task.update(taskseries) end)
+      Enum.map(tasks, fn(task) ->
+        %{task |
+          series_id:     element |> XmlNode.attr("id"),
+          name:          element |> XmlNode.attr("name"),
+          modified:      element |> XmlNode.attr("modified"),
+          tags:          element |> XmlNode.first("tags") |> parse_tags,
+          participants:  element |> XmlNode.first("participants") |> XmlNode.text,
+          url:           element |> XmlNode.attr("url"),
+          created:       element |> XmlNode.attr("created"),
+          source:        element |> XmlNode.attr("source"),
+          rrule:         element |> XmlNode.first("rrule") |> XmlNode.text,
+          list_id:       list_id
+        }
+      end)
     end
 
     defp parse_tags(element) do
@@ -67,7 +67,7 @@ defmodule Exrtm.API.Tasks do
     end
 
     defp parse_task(element) do
-      Task.new(
+      %Task{
         id:           element |> XmlNode.attr("id"),
         completed:    element |> XmlNode.attr("completed"),
         added:        element |> XmlNode.attr("added"),
@@ -77,7 +77,7 @@ defmodule Exrtm.API.Tasks do
         estimate:     element |> XmlNode.attr("estimate"),
         due:          element |> XmlNode.attr("due"),
         postponed:    element |> XmlNode.attr("postponed")
-      )
+      }
     end
   end
 
@@ -87,7 +87,7 @@ defmodule Exrtm.API.Tasks do
     """
 
     def invoke(task, method, options \\ []) do
-      if task == nil do raise ExrtmError.new(message: "specified task is invalid.") end
+      if task == nil do raise %ExrtmError{message: "specified task is invalid."} end
 
       user = Exrtm.User.get
       timeline = Exrtm.Timeline.create()
